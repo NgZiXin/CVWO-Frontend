@@ -10,17 +10,29 @@ const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
     //Logic to query for user's history
     const historyUrl = `${url}/me/history`;
     const [history, setHistory] = React.useState<History[]>([]);
-    const getHistory = () => {
-        fetch(historyUrl, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((response_items) => setHistory(response_items.history.reverse()))
-            .catch((err) => console.log(`Error:${err.message}`));
+    const getHistory = async () => {
+        try {
+            const response = await fetch(historyUrl, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            });
+            if (response.ok) {
+                const response_items = await response.json();
+                setHistory(response_items.history.reverse());
+            } else {
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                    console.log(errorData.message);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
     };
-    React.useEffect(() => getHistory(), []);
+    React.useEffect(() => {
+        getHistory();
+    }, []);
 
     // Logic to obtain filtered data for display
     const [filteredHistory, setFilteredHistory] = React.useState<History[]>([]);

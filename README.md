@@ -2,6 +2,8 @@
 
 Frontend submission by Ng Zi Xin. It is not completed, there is still a lot of code clean up I need to make, but the features by and large are there and functioning. Do let me know of any improvements I can make, thank you.
 
+Please ensure that you have set-up and are able to run the [backend](https://github.com/NgZiXin/CVWO-Backend) first.
+
 ## Getting Started
 
 ### Running the app
@@ -14,18 +16,17 @@ Frontend submission by Ng Zi Xin. It is not completed, there is still a lot of c
 
 4. Install dependencies for the project by entering this command:
 
-```bash
+```shell
 yarn install
 ```
 
 5. Run the app in development mode by entering this command:
 
-```bash
+```shell
 yarn start
 ```
 
-6. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. 
-#### Please use localhost:3001 because it is the only url whitelisted by CORS on the backend.
+6. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. **Please use localhost:3001** because it is the only url whitelisted by CORS on the backend.
 
 7. You should see a page like this.
    ![Basic Page](public/images/HomePage.png)

@@ -43,19 +43,30 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(createUrl, {
-            method: "POST",
-            mode: "cors",
-            body: data,
-            credentials: "include",
-        })
-            .then(() => {
-                handleReset();
-                handleClose();
-                props.reRender();
-                openSuccessAlert();
-            })
-            .catch((err) => console.log(`Error:${err.message}`));
+        const createThread = async () => {
+            try {
+                const response = await fetch(createUrl, {
+                    method: "POST",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
+                if (response.ok) {
+                    handleReset();
+                    handleClose();
+                    props.reRender();
+                    openSuccessAlert();
+                } else {
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
+                }
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        createThread();
     };
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFields((prevState) => {
@@ -138,9 +149,9 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Button type="submit">{"Submit"}</Button>
                         <Button onClick={handleReset}>{"Reset"}</Button>
                         <Button onClick={handleClose}>{"Cancel"}</Button>
+                        <Button type="submit">{"Submit"}</Button>
                     </DialogActions>
                 </form>
             </Dialog>

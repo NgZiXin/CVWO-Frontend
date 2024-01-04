@@ -28,29 +28,31 @@ const CommentCreate: React.FC<CommentCreateProps> = (props) => {
         if (user_id) {
             const FormElement = event.target as HTMLFormElement;
             const data = new FormData(FormElement);
-            fetch(createUrl, {
-                method: "POST",
-                mode: "cors",
-                body: data,
-                credentials: "include",
-            })
-                .then((response) => {
+            const createComment = async () => {
+                try {
+                    const response = await fetch(createUrl, {
+                        method: "POST",
+                        mode: "cors",
+                        body: data,
+                        credentials: "include",
+                    });
                     if (response.ok) {
                         clearField();
                         props.reRender();
                         openSuccessAlert();
                         setMessage("");
                     } else {
-                        return response.json();
+                        const errorData = await response.json();
+                        if (errorData && errorData.message) {
+                            console.log(errorData.message);
+                            setMessage("Input is missing");
+                        }
                     }
-                })
-                .then((errorData) => {
-                    if (errorData && errorData.message) {
-                        console.log(errorData.message);
-                        setMessage("Input is missing");
-                    }
-                })
-                .catch((err) => console.log(`Error:${err.message}`));
+                } catch (err) {
+                    console.error(`Error: ${err}`);
+                }
+            };
+            createComment();
         } else {
             openLoginAlert();
         }

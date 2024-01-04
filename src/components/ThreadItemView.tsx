@@ -1,3 +1,4 @@
+import UserInfo from "./UserInfo";
 import ThreadItemViewProps from "../types/ThreadItemViewProps";
 import ThreadItemViewTheme from "../themes/ThreadItemViewTheme";
 import { Card, CardContent, Typography, Box } from "@mui/material";
@@ -29,7 +30,7 @@ const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
                             }}
                         >
                             {props.thread.user.country === "--" ? (
-                                <LanguageIcon />
+                                <LanguageIcon style={{ width: "1rem", height: "1rem" }} />
                             ) : (
                                 <ReactCountryFlag
                                     countryCode={props.thread.user.country}
@@ -37,10 +38,9 @@ const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
                                     style={{ width: "1rem", height: "1rem" }}
                                 />
                             )}
-                            <Typography color="textSecondary" variant="body2" sx={{ ml: "0.5rem" }}>
-                                {`${
-                                    props.thread.user.username
-                                }, created at ${props.thread.created_at.toLocaleString()}.`}
+                            <Typography color="textSecondary" variant="body2" component="div" sx={{ ml: "0.5rem" }}>
+                                <UserInfo user={props.thread.user} />
+                                {` created at ${props.thread.created_at.toLocaleString()}.`}
                                 {props.thread.created_at != props.thread.updated_at ? " [Edited]" : ""}
                             </Typography>
                         </Box>

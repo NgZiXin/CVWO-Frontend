@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
-    const deleteURL = `${url}/main_threads/${props.main_thread_id}`;
+    const deleteUrl = `${url}/main_threads/${props.main_thread_id}`;
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -16,24 +16,26 @@ const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
     };
     const handleConfirmDelete = () => {
         setDialogOpen(false);
-        fetch(deleteURL, {
-            method: "DELETE",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => {
+        const deleteThread = async () => {
+            try {
+                const response = await fetch(deleteUrl, {
+                    method: "DELETE",
+                    mode: "cors",
+                    credentials: "include",
+                });
                 if (response.ok) {
                     window.history.back();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        deleteThread();
     };
 
     return (
@@ -50,10 +52,10 @@ const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleConfirmDelete} sx={{ color: "error" }}>
+                    <Button onClick={handleCancelDelete}>{"Cancel"}</Button>
+                    <Button onClick={handleConfirmDelete} color="error">
                         {"Delete"}
                     </Button>
-                    <Button onClick={handleCancelDelete}>{"Cancel"}</Button>
                 </DialogActions>
             </Dialog>
         </>

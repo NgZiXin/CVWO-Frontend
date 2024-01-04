@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Link, Typography, Modal } from "@mui/material";
+import { Box, Link, Typography, Modal, Button, Grid } from "@mui/material";
 
 const Guidelines: React.FC = () => {
     const [open, setOpen] = React.useState(false);
@@ -42,6 +42,9 @@ const Guidelines: React.FC = () => {
                             </li>
                         </ol>
                     </Typography>
+                    <Grid container justifyContent="flex-end">
+                        <Button onClick={handleClose}>{"Close"}</Button>
+                    </Grid>
                 </Box>
             </Modal>
         </>

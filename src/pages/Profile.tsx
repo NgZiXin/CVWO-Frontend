@@ -22,17 +22,29 @@ const meUrl = `${url}/me`;
 const Profile: React.FC = () => {
     // Logic to query for profile data
     const [userData, setUserData] = React.useState<User>();
-    const getUserData = () => {
-        fetch(meUrl, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((userData) => setUserData(userData))
-            .catch((err) => console.log(`Error:${err.message}`));
+    const getUserData = async () => {
+        try {
+            const response = await fetch(meUrl, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            });
+            if (response.ok) {
+                const userData = await response.json();
+                setUserData(userData);
+            } else {
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                    console.log(errorData.message);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
     };
-    React.useEffect(() => getUserData(), []);
+    React.useEffect(() => {
+        getUserData();
+    }, []);
 
     const [historyFilter, setHistoryFilter] = React.useState<HistoryFilter>({
         post: true,

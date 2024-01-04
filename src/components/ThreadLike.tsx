@@ -14,18 +14,26 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
     // Logic to query for thread's likes
     const likesUrl = `${url}/main_threads/${props.main_thread_id}/likes`;
     const [likes, setLikes] = React.useState<Like[]>([]);
-    const getLikes = () => {
-        fetch(likesUrl, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((likes) => {
+    const getLikes = async () => {
+        try {
+            const response = await fetch(likesUrl, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            });
+            if (response.ok) {
+                const likes = await response.json();
                 setLikes(likes);
                 getLikeId(likes);
-            })
-            .catch((err) => console.log(`Error:${err.message}`));
+            } else {
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                    console.log(errorData.message);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
     };
 
     // Logic for Login failed Alert
@@ -55,56 +63,62 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
         if (likeId) {
             // Logic to delete like
             if (likeId) {
-                const deleteURL = `${url}/likes/${likeId}`;
-                fetch(deleteURL, {
-                    method: "DELETE",
-                    mode: "cors",
-                    credentials: "include",
-                })
-                    .then((response) => {
+                const deleteUrl = `${url}/likes/${likeId}`;
+                const deleteLike = async () => {
+                    try {
+                        const response = await fetch(deleteUrl, {
+                            method: "DELETE",
+                            mode: "cors",
+                            credentials: "include",
+                        });
                         if (response.ok) {
                             getLikes();
                         } else {
-                            return response.json();
+                            const errorData = await response.json();
+                            if (errorData && errorData.message) {
+                                console.log(errorData.message);
+                            }
                         }
-                    })
-                    .then((errorData) => {
-                        if (errorData && errorData.message) {
-                            console.log(errorData.message);
-                        }
-                    })
-                    .catch((err) => console.error(`Error: ${err.message}`));
+                    } catch (err) {
+                        console.error(`Error: ${err}`);
+                    }
+                };
+                deleteLike();
             } else {
                 console.log("Error in obtaining like Id");
             }
         } else {
             // Logic to create like
-            const createURL = `${url}/likes`;
-            fetch(createURL, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ like: { main_thread_id: props.main_thread_id } }),
-                credentials: "include",
-            })
-                .then((response) => {
+            const createUrl = `${url}/likes`;
+            const createLike = async () => {
+                try {
+                    const response = await fetch(createUrl, {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ like: { main_thread_id: props.main_thread_id } }),
+                        credentials: "include",
+                    });
                     if (response.ok) {
                         getLikes();
                     } else {
-                        return response.json();
+                        const errorData = await response.json();
+                        if (errorData && errorData.message) {
+                            console.log(errorData.message);
+                        }
                     }
-                })
-                .then((errorData) => {
-                    if (errorData && errorData.message) {
-                        console.log(errorData.message);
-                    }
-                })
-                .catch((err) => console.error(`Error: ${err.message}`));
+                } catch (err) {
+                    console.error(`Error: ${err}`);
+                }
+            };
+            createLike();
         }
     };
-    React.useEffect(() => getLikes(), []);
+    React.useEffect(() => {
+        getLikes();
+    }, []);
 
     return (
         <Box sx={{ display: "flex", alignItems: "center" }}>

@@ -9,17 +9,29 @@ const CommentList: React.FC<CommentListProp> = (props) => {
     // Logic to query for comments
     const commentsUrl = `${url}/main_threads/${props.main_thread_id}/comments`;
     const [comments, setComments] = React.useState<Comment[]>([]);
-    const getComments = () => {
-        fetch(commentsUrl, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((response_items) => setComments(response_items))
-            .catch((err) => console.log(`Error:${err.message}`));
+    const getComments = async () => {
+        try {
+            const response = await fetch(commentsUrl, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            });
+            if (response.ok) {
+                const comments = await response.json();
+                setComments(comments.reverse());
+            } else {
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                    console.log(errorData.message);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
     };
-    React.useEffect(() => getComments(), [props.toggle]);
+    React.useEffect(() => {
+        getComments();
+    }, [props.toggle]);
 
     return (
         <>

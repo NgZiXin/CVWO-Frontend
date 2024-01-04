@@ -45,7 +45,7 @@ const ThreadItem: React.FC<ThreadItemProps> = (props) => {
                                 }}
                             >
                                 {props.thread.user.country === "--" ? (
-                                    <LanguageIcon />
+                                    <LanguageIcon style={{ width: "1rem", height: "1rem" }} />
                                 ) : (
                                     <ReactCountryFlag
                                         countryCode={props.thread.user.country}

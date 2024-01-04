@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
-    const deleteURL = `${url}/comments/${props.comment_id}`;
+    const deleteUrl = `${url}/comments/${props.comment_id}`;
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -16,24 +16,26 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
     };
     const handleConfirmDelete = () => {
         setDialogOpen(false);
-        fetch(deleteURL, {
-            method: "DELETE",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => {
+        const deleteComment = async () => {
+            try {
+                const response = await fetch(deleteUrl, {
+                    method: "DELETE",
+                    mode: "cors",
+                    credentials: "include",
+                });
                 if (response.ok) {
                     window.location.reload();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        deleteComment();
     };
 
     return (
@@ -43,17 +45,17 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
             </Button>
 
             <Dialog open={isDialogOpen} onClose={handleCancelDelete}>
-                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogTitle>{"Confirm Delete"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {"Are you sure you want to delete? This action cannot be undone."}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleConfirmDelete} sx={{ color: "error" }}>
+                    <Button onClick={handleCancelDelete}>{"Cancel"}</Button>
+                    <Button onClick={handleConfirmDelete} color="error">
                         {"Delete"}
                     </Button>
-                    <Button onClick={handleCancelDelete}>Cancel</Button>
                 </DialogActions>
             </Dialog>
         </>

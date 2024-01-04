@@ -47,28 +47,30 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(patchUrl, {
-            method: "PATCH",
-            mode: "cors",
-            credentials: "include",
-            body: data,
-        })
-            .then((response) => {
+        const updateProfile = async () => {
+            try {
+                const response = await fetch(patchUrl, {
+                    method: "PATCH",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
                 if (response.ok) {
                     openSuccessAlert();
                     closeUpdate();
                     props.reRender();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                        setMessage(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                    setMessage(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        updateProfile();
     };
 
     // Logic for error display text
@@ -93,6 +95,9 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
                     value={fields.username}
                     onChange={handleUsernameChange}
                     disabled={!update}
+                    InputProps={{
+                        inputProps: { maxLength: 25 },
+                    }}
                 />
                 <TextField
                     id="bio"
@@ -146,10 +151,10 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
                     <Grid item>
                         {update ? (
                             <>
+                                <Button onClick={handleCancel}>{"Cancel"}</Button>
                                 <Button type="submit" key="submitUpdate">
                                     {"Save"}
                                 </Button>
-                                <Button onClick={handleCancel}>{"Cancel"}</Button>
                             </>
                         ) : (
                             <Button type="button" onClick={openUpdate} key="openUpdate" sx={{ color: "#A8ADBD" }}>

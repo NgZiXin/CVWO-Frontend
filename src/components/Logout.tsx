@@ -13,13 +13,26 @@ const Logout: React.FC = () => {
 
     const handleConfirmDelete = () => {
         setDialogOpen(false);
-        fetch(logoutUrl, {
-            method: "DELETE",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then(() => (window.location.href = "/"))
-            .catch((err) => console.log(`Error:${err.message}`));
+        const logout = async () => {
+            try {
+                const response = await fetch(logoutUrl, {
+                    method: "DELETE",
+                    mode: "cors",
+                    credentials: "include",
+                });
+                if (response.ok) {
+                    window.location.href = "/";
+                } else {
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
+                }
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        logout();
     };
 
     const handleCancelDelete = () => {
@@ -37,10 +50,10 @@ const Logout: React.FC = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
+                    <Button onClick={handleCancelDelete}>{"Cancel"}</Button>
                     <Button onClick={handleConfirmDelete} color="error">
                         {"Logout"}
                     </Button>
-                    <Button onClick={handleCancelDelete}>{"Cancel"}</Button>
                 </DialogActions>
             </Dialog>
         </>

@@ -1,7 +1,7 @@
 import Country from "../types/Country";
 
 const countries: Country[] = [
-    { id: 1, country: "--", countryCode: "--" },
+    { id: 1, country: "Not Specified", countryCode: "--" },
     { id: 2, country: "Afghanistan", countryCode: "AF" },
     { id: 3, country: "Albania", countryCode: "AL" },
     { id: 4, country: "Algeria", countryCode: "DZ" },

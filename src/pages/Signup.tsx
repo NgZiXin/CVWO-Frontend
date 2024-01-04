@@ -6,7 +6,7 @@ import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/m
 import LanguageIcon from "@mui/icons-material/Language";
 import ReactCountryFlag from "react-country-flag";
 
-const SignupUrl = `${url}/users/signup`;
+const signupUrl = `${url}/users/signup`;
 
 const defaultFields: SignupFormFields = {
     username: "",
@@ -45,26 +45,28 @@ const Signup: React.FC = () => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(SignupUrl, {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            body: data,
-        })
-            .then((response) => {
+        const signup = async () => {
+            try {
+                const response = await fetch(signupUrl, {
+                    method: "POST",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
                 if (response.ok) {
                     window.location.href = "/successfulsignup";
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                        setMessage(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                    setMessage(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        signup();
     };
 
     // Logic for error display text
@@ -79,11 +81,15 @@ const Signup: React.FC = () => {
                         id="username"
                         required
                         label="username"
+                        helperText="Maximum 25 characters."
                         margin="normal"
                         fullWidth
                         name="user[username]"
                         value={fields.username}
                         onChange={handleUsernameChange}
+                        InputProps={{
+                            inputProps: { maxLength: 25 },
+                        }}
                     />
                     <TextField
                         id="password"

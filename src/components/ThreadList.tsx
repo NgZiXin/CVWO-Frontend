@@ -9,17 +9,29 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
     // Logic to query thread list
     const threadListUrl = `${url}/categories/${props.categoryId}`;
     const [threads, setThreads] = React.useState<Thread[]>([]);
-    const getThreads = () => {
-        fetch(threadListUrl, {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-        })
-            .then((response) => response.json())
-            .then((response_items) => setThreads(() => response_items.main_threads.reverse()))
-            .catch((err) => console.log(`Error:${err.message}`));
+    const getThreads = async () => {
+        try {
+            const response = await fetch(threadListUrl, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+            });
+            if (response.ok) {
+                const response_items = await response.json();
+                setThreads(response_items.main_threads.reverse());
+            } else {
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                    console.log(errorData.message);
+                }
+            }
+        } catch (err) {
+            console.error(`Error: ${err}`);
+        }
     };
-    React.useEffect(() => getThreads(), [props.categoryId, props.toggle]);
+    React.useEffect(() => {
+        getThreads();
+    }, [props.categoryId, props.toggle]);
 
     // Logic for sorting
     const sortByDate = (): void => {

@@ -37,27 +37,29 @@ const Login: React.FC<LoginProps> = (props) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(loginUrl, {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            body: data,
-        })
-            .then((response) => {
+        const login = async () => {
+            try {
+                const response = await fetch(loginUrl, {
+                    method: "POST",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
                 if (response.ok) {
                     handleClose();
                     props.callback();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                        setMessage(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                    setMessage(errorData.message);
-                }
-            })
-            .catch((err) => console.log(`Error:${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        login();
     };
 
     // Logic for error display text
@@ -101,8 +103,8 @@ const Login: React.FC<LoginProps> = (props) => {
                         <DialogContentText sx={{ color: "red" }}>{message}</DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button onClick={handleClose}>{"Cancel"}</Button>
+                        <Button type="submit">{"Submit"}</Button>
                     </DialogActions>
                 </form>
             </Dialog>

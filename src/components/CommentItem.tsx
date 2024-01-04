@@ -1,5 +1,6 @@
 import CommentTextArea from "./CommentTextArea";
 import CommentDelete from "./CommentDelete";
+import UserInfo from "./UserInfo";
 import CommentItemProp from "../types/CommentItemProps";
 import CommentItemTheme from "../themes/CommentItemTheme";
 import getUserId from "../utils/getUserId";
@@ -38,7 +39,7 @@ const CommentItem: React.FC<CommentItemProp> = (props) => {
                             }}
                         >
                             {props.comment.user.country === "--" ? (
-                                <LanguageIcon />
+                                <LanguageIcon style={{ width: "1rem", height: "1rem" }} />
                             ) : (
                                 <ReactCountryFlag
                                     countryCode={props.comment.user.country}
@@ -46,10 +47,9 @@ const CommentItem: React.FC<CommentItemProp> = (props) => {
                                     style={{ width: "1rem", height: "1rem" }}
                                 />
                             )}
-                            <Typography color="textSecondary" variant="body2" sx={{ ml: "0.5rem" }}>
-                                {`${
-                                    props.comment.user.username
-                                }, created at ${props.comment.created_at.toLocaleString()}.`}
+                            <Typography color="textSecondary" component="div" variant="body2" sx={{ ml: "0.5rem" }}>
+                                <UserInfo user={props.comment.user} />
+                                {`, created at ${props.comment.created_at.toLocaleString()}.`}
                                 {props.comment.created_at != props.comment.updated_at ? " [Edited]" : ""}
                             </Typography>
                         </Box>

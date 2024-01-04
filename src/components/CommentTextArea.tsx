@@ -46,26 +46,28 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(patchUrl, {
-            method: "PATCH",
-            mode: "cors",
-            body: data,
-            credentials: "include",
-        })
-            .then((response) => {
+        const updateComment = async () => {
+            try {
+                const response = await fetch(patchUrl, {
+                    method: "PATCH",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
                 if (response.ok) {
                     props.closeUpdate();
                     openSuccessAlert();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        updateComment();
     };
 
     // Logic for Success Alert
@@ -87,8 +89,8 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
                 />
                 {props.update && (
                     <>
+                        <Button onClick={handleCancel}>{"Cancel"}</Button>
                         <Button type="submit">{"Save"}</Button>
-                        <Button onClick={handleCancel}>{"Cancel"}</Button>{" "}
                     </>
                 )}
             </form>

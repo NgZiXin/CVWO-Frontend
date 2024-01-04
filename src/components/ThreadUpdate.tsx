@@ -35,28 +35,30 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
         const data = new FormData(FormElement);
-        fetch(patchUrl, {
-            method: "PATCH",
-            mode: "cors",
-            body: data,
-            credentials: "include",
-        })
-            .then((response) => {
+        const updateThread = async () => {
+            try {
+                const response = await fetch(patchUrl, {
+                    method: "PATCH",
+                    mode: "cors",
+                    body: data,
+                    credentials: "include",
+                });
                 if (response.ok) {
                     handleReset();
                     handleClose();
                     props.reRender();
                     openSuccessAlert();
                 } else {
-                    return response.json();
+                    const errorData = await response.json();
+                    if (errorData && errorData.message) {
+                        console.log(errorData.message);
+                    }
                 }
-            })
-            .then((errorData) => {
-                if (errorData && errorData.message) {
-                    console.log(errorData.message);
-                }
-            })
-            .catch((err) => console.error(`Error: ${err.message}`));
+            } catch (err) {
+                console.error(`Error: ${err}`);
+            }
+        };
+        updateThread();
     };
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFields((prevState) => {
@@ -139,9 +141,9 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Button type="submit">{"Submit"}</Button>
                         <Button onClick={handleReset}>{"Reset"}</Button>
                         <Button onClick={handleClose}>{"Cancel"}</Button>
+                        <Button type="submit">{"Submit"}</Button>
                     </DialogActions>
                 </form>
             </Dialog>

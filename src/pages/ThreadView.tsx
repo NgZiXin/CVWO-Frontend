@@ -27,8 +27,8 @@ const ThreadView: React.FC = () => {
                 credentials: "include",
             });
             if (response.ok) {
-                const response_items = await response.json();
-                setThread(response_items);
+                const thread = await response.json();
+                setThread(thread);
             } else {
                 const errorData = await response.json();
                 if (errorData && errorData.message) {
