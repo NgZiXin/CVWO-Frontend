@@ -25,7 +25,7 @@ yarn start
 ```
 
 6. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. 
-# Please use localhost:3001 because it is the only url whitelisted by CORS on the backend.
+#### Please use localhost:3001 because it is the only url whitelisted by CORS on the backend.
 
 7. You should see a page like this.
    ![Basic Page](public/images/HomePage.png)
