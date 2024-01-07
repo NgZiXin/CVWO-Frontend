@@ -19,7 +19,7 @@ Please ensure that you have set-up and are able to run the [backend](https://git
 yarn install
 ```
 
-5. Edit **src/data/url.tsx** to input backend API url.
+5. Edit **src/data/apiUrl.tsx** to input backend API url as baseUrl.
     ![Api Url](public/images/ApiUrl.png)
 
 
