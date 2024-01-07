@@ -1,12 +1,12 @@
 import SignupFormFields from "../types/SignupFormFields";
 import countries from "../data/countries";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 
-const signupUrl = `${url}/users/signup`;
+const signupUrl = `${apiUrl}/users/signup`;
 
 const defaultFields: SignupFormFields = {
     username: "",

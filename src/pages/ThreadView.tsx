@@ -5,7 +5,7 @@ import ThreadLike from "../components/ThreadLike";
 import CommentCreate from "../components/CommentCreate";
 import CommentList from "../components/CommentList";
 import Thread from "../types/Thread";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
 import { Container, Box, Button, Grid, Typography } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const ThreadView: React.FC = () => {
     const userId = getUserId();
 
     // Logic to query for thread
-    const threadUrl = `${url}/main_threads/${id}`;
+    const threadUrl = `${apiUrl}/main_threads/${id}`;
     const [thread, setThread] = React.useState<Thread>();
     const getThread = async () => {
         try {

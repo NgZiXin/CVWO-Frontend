@@ -1,7 +1,7 @@
 import LoginAlert from "./LoginAlert";
 import ThreadLikeProp from "../types/ThreadLikeProps";
 import Like from "../types/Like";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
 import { Checkbox, Typography, Box } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
@@ -12,7 +12,7 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
     const userId: number | null = getUserId();
 
     // Logic to query for thread's likes
-    const likesUrl = `${url}/main_threads/${props.main_thread_id}/likes`;
+    const likesUrl = `${apiUrl}/main_threads/${props.main_thread_id}/likes`;
     const [likes, setLikes] = React.useState<Like[]>([]);
     const getLikes = async () => {
         try {
@@ -63,7 +63,7 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
         if (likeId) {
             // Logic to delete like
             if (likeId) {
-                const deleteUrl = `${url}/likes/${likeId}`;
+                const deleteUrl = `${apiUrl}/likes/${likeId}`;
                 const deleteLike = async () => {
                     try {
                         const response = await fetch(deleteUrl, {
@@ -89,7 +89,7 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
             }
         } else {
             // Logic to create like
-            const createUrl = `${url}/likes`;
+            const createUrl = `${apiUrl}/likes`;
             const createLike = async () => {
                 try {
                     const response = await fetch(createUrl, {

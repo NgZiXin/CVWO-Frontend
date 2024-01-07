@@ -1,6 +1,6 @@
 import ProfileItemProps from "../types/ProfileItemProps";
 import ProfileItemFields from "../types/ProfileItemFields";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import countries from "../data/countries";
 import { Grid, Button, MenuItem, Typography, TextField, Snackbar, Alert } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -22,7 +22,7 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
     const closeUpdate = (): void => setUpdate(false);
 
     // Logic for updating user data
-    const patchUrl = `${url}/users/${props.user.id}`;
+    const patchUrl = `${apiUrl}/users/${props.user.id}`;
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFields((prevState) => {
             return { ...prevState, username: event.target.value };

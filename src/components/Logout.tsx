@@ -1,8 +1,8 @@
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
-const logoutUrl = `${url}/logout`;
+const logoutUrl = `${apiUrl}/logout`;
 
 const Logout: React.FC = () => {
     const [isDialogOpen, setDialogOpen] = React.useState(false);

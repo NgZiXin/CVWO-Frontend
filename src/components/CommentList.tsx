@@ -1,13 +1,13 @@
 import CommentItem from "./CommentItem";
 import Comment from "../types/Comment";
 import CommentListProp from "../types/CommentListProps";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import { Typography, Grid } from "@mui/material";
 import React from "react";
 
 const CommentList: React.FC<CommentListProp> = (props) => {
     // Logic to query for comments
-    const commentsUrl = `${url}/main_threads/${props.main_thread_id}/comments`;
+    const commentsUrl = `${apiUrl}/main_threads/${props.main_thread_id}/comments`;
     const [comments, setComments] = React.useState<Comment[]>([]);
     const getComments = async () => {
         try {

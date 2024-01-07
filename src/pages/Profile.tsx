@@ -2,7 +2,7 @@ import ProfileThreadList from "../components/ProfileThreadList";
 import ProfileItem from "../components/ProfileItem";
 import HistoryFilter from "../types/HistoryFilter";
 import User from "../types/User";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import {
     Container,
     Grid,
@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import React from "react";
 
-const meUrl = `${url}/me`;
+const meUrl = `${apiUrl}/me`;
 
 const Profile: React.FC = () => {
     // Logic to query for profile data

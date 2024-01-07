@@ -1,7 +1,7 @@
 import LoginAlert from "./LoginAlert";
 import ThreadFormFields from "../types/ThreadFormFields";
 import categories from "../data/categories";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import ThreadCreateProps from "../types/ThreadCreateProps";
 import getUserId from "../utils/getUserId";
 import {
@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const createUrl = `${url}/main_threads`;
+const createUrl = `${apiUrl}/main_threads`;
 
 const defaultFields: ThreadFormFields = {
     title: "",

@@ -1,13 +1,13 @@
 import LoginAlert from "./LoginAlert";
 import CommentCreateProps from "../types/CommentCreateProps";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
 import { Button, Box, Alert, Snackbar, TextField, TextareaAutosize, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import React from "react";
 
 const CommentCreate: React.FC<CommentCreateProps> = (props) => {
-    const createUrl = `${url}/comments`;
+    const createUrl = `${apiUrl}/comments`;
     const user_id: number | null = getUserId();
 
     // Logic for Login failed Alert

@@ -1,14 +1,14 @@
 import History from "../types/History";
 import ProfileThreadListProps from "../types/ProfileThreadListProps";
 import HistoryFilter from "../types/HistoryFilter";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import { Typography, Grid, List, ListItem, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 
 const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
     //Logic to query for user's history
-    const historyUrl = `${url}/me/history`;
+    const historyUrl = `${apiUrl}/me/history`;
     const [history, setHistory] = React.useState<History[]>([]);
     const getHistory = async () => {
         try {

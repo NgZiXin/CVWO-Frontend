@@ -1,10 +1,10 @@
 import CommentDeleteProps from "../types/CommentDelete";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
-    const deleteUrl = `${url}/comments/${props.comment_id}`;
+    const deleteUrl = `${apiUrl}/comments/${props.comment_id}`;
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);

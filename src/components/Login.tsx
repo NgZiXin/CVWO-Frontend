@@ -1,11 +1,11 @@
 import LoginFormFields from "../types/LoginFormFields";
 import LoginProps from "../types/LoginProps";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const loginUrl = `${url}/login`;
+const loginUrl = `${apiUrl}/login`;
 
 const defaultFields: LoginFormFields = {
     username: "",

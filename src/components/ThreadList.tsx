@@ -1,13 +1,13 @@
 import ThreadItem from "./ThreadItem";
 import Thread from "../types/Thread";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import ThreadListProps from "../types/ThreadListProps";
 import React from "react";
 import { Typography, Grid, Link } from "@mui/material";
 
 const ThreadList: React.FC<ThreadListProps> = (props) => {
     // Logic to query thread list
-    const threadListUrl = `${url}/categories/${props.categoryId}`;
+    const threadListUrl = `${apiUrl}/categories/${props.categoryId}`;
     const [threads, setThreads] = React.useState<Thread[]>([]);
     const getThreads = async () => {
         try {

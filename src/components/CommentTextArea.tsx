@@ -1,5 +1,5 @@
 import CommentTextAreaProps from "../types/CommentTextAreaProps";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { TextareaAutosize, Button, Alert, Snackbar } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
-    const patchUrl = `${url}/comments/${props.id}`;
+    const patchUrl = `${apiUrl}/comments/${props.id}`;
     const classes = useStyles();
 
     // Logic for Text Area Form

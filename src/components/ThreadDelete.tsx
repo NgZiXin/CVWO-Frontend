@@ -1,10 +1,10 @@
 import ThreadDeleteProp from "../types/ThreadDeleteProps";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
-    const deleteUrl = `${url}/main_threads/${props.main_thread_id}`;
+    const deleteUrl = `${apiUrl}/main_threads/${props.main_thread_id}`;
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);

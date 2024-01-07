@@ -1,7 +1,7 @@
 import ThreadFormFields from "../types/ThreadFormFields";
 import ThreadUpdateProps from "../types/ThreadUpdateProps";
 import categories from "../data/categories";
-import url from "../data/url";
+import apiUrl from "../data/apiUrl";
 import {
     Button,
     TextField,
@@ -16,7 +16,7 @@ import {
 import React from "react";
 
 const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
-    const patchUrl = `${url}/main_threads/${props.thread.id}`;
+    const patchUrl = `${apiUrl}/main_threads/${props.thread.id}`;
     const defaultFields: ThreadFormFields = {
         title: props.thread.title,
         body: props.thread.body,
