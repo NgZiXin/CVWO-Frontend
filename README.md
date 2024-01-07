@@ -15,20 +15,22 @@ Please ensure that you have set-up and are able to run the [backend](https://git
 3. Open your terminal and navigate to the directory containing your cloned project.
 
 4. Install dependencies for the project by entering this command:
-
 ```shell
 yarn install
 ```
 
-5. Run the app in development mode by entering this command:
+5. Edit **src/data/url.tsx** to input backend API url.
+    ![Api Url](public/images/ApiUrl.png)
 
+
+6. Run the app in development mode by entering this command:
 ```shell
 yarn start
 ```
 
-6. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. **Please use localhost:3001** because it is the only url whitelisted by CORS on the backend.
+7. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. **Important** If not using localhost:3001, do edit CORS in the [backend](https://github.com/NgZiXin/CVWO-Backend) to reflect your frontend client url.
 
-7. You should see a page like this.
+8. You should see a page like this.
    ![Basic Page](public/images/HomePage.png)
 
 ### Navigating the code
