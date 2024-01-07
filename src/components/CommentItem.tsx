@@ -5,7 +5,7 @@ import CommentItemProp from "../types/CommentItemProps";
 import CommentItemTheme from "../themes/CommentItemTheme";
 import getUserId from "../utils/getUserId";
 import { Box, Card, CardContent, Typography, Button, ThemeProvider } from "@mui/material";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 import LanguageIcon from "@mui/icons-material/Language";
 import React from "react";
 

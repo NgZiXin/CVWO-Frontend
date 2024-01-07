@@ -4,7 +4,7 @@ import url from "../data/url";
 import countries from "../data/countries";
 import { Grid, Button, MenuItem, Typography, TextField, Snackbar, Alert } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ProfileItem: React.FC<ProfileItemProps> = (props) => {

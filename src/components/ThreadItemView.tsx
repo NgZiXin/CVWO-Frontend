@@ -4,7 +4,7 @@ import ThreadItemViewTheme from "../themes/ThreadItemViewTheme";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import LanguageIcon from "@mui/icons-material/Language";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {

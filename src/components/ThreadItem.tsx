@@ -4,7 +4,7 @@ import { Card, CardContent, CardActionArea, Typography, Box } from "@mui/materia
 import { Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import LanguageIcon from "@mui/icons-material/Language";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ThreadItem: React.FC<ThreadItemProps> = (props) => {

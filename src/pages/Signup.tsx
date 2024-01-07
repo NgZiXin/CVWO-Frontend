@@ -4,7 +4,7 @@ import url from "../data/url";
 import React from "react";
 import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 
 const signupUrl = `${url}/users/signup`;
 

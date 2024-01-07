@@ -13,7 +13,7 @@ import {
     Typography,
 } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
-import ReactCountryFlag from "react-country-flag";
+import { ReactCountryFlag } from "react-country-flag";
 
 const UserInfo: React.FC<UserInfoProps> = (props) => {
     // Logic for opening dialog
