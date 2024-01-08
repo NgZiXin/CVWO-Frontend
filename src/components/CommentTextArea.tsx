@@ -11,18 +11,18 @@ const commonStyle = {
 };
 
 const commentDisplay = {
-        ...commonStyle,
-        resize: "none",
-        outline: "none",
-        wordWrap: "break-word",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-    };
+    ...commonStyle,
+    resize: "none",
+    outline: "none",
+    wordWrap: "break-word",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+};
 
 const commentUpdate = {
-        ...commonStyle,
-        outline: "2px solid #ccc",
-    };
+    ...commonStyle,
+    outline: "2px solid #ccc",
+};
 
 const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
     const patchUrl = `${apiUrl}/comments/${props.id}`;

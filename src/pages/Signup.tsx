@@ -3,12 +3,10 @@ import countries from "../data/countries";
 import apiUrl from "../data/apiUrl";
 import React from "react";
 import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 
 const signupUrl = `${apiUrl}/users/signup`;
-const navigate = useNavigate();
 
 const defaultFields: SignupFormFields = {
     username: "",
@@ -56,7 +54,7 @@ const Signup: React.FC = () => {
                     credentials: "include",
                 });
                 if (response.ok) {
-                    navigate("/successfulsignup");
+                    window.location.href = "/successfulsignup";
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {
