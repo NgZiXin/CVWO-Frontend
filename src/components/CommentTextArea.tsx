@@ -1,37 +1,30 @@
 import CommentTextAreaProps from "../types/CommentTextAreaProps";
 import apiUrl from "../data/apiUrl";
 import React from "react";
-import { TextareaAutosize, Button, Alert, Snackbar } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { TextareaAutosize, Button, Alert, Snackbar, styled } from "@mui/material";
 
 const commonStyle = {
     width: "100%",
     fontSize: "1rem",
     borderRadius: "4px",
+    border: "none",
 };
 
-const useStyles = makeStyles(() => ({
-    commentDisplay: {
+const commentDisplay = {
         ...commonStyle,
         outline: "none",
-        border: "none",
         wordWrap: "break-word",
         overflow: "hidden",
         textOverflow: "ellipsis",
-        resize: "none",
-    },
+    };
 
-    commentUpdate: {
+const commentUpdate = {
         ...commonStyle,
-        border: "none",
         outline: "2px solid #ccc",
-        resize: "none",
-    },
-}));
+    };
 
 const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
     const patchUrl = `${apiUrl}/comments/${props.id}`;
-    const classes = useStyles();
 
     // Logic for Text Area Form
     const [body, setBody] = React.useState<string>(props.body);
@@ -83,7 +76,7 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
                     name="comment[body]"
                     value={body}
                     maxRows={props.update ? undefined : props.maxRows}
-                    className={props.update ? classes.commentUpdate : classes.commentDisplay}
+                    style={props.update ? commentUpdate : commentDisplay}
                     readOnly={!props.update}
                     onChange={handleBodyChange}
                 />
