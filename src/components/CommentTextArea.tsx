@@ -1,7 +1,7 @@
 import CommentTextAreaProps from "../types/CommentTextAreaProps";
 import apiUrl from "../data/apiUrl";
 import React from "react";
-import { TextareaAutosize, Button, Alert, Snackbar, styled } from "@mui/material";
+import { TextareaAutosize, Button, Alert, Snackbar } from "@mui/material";
 
 const commonStyle = {
     width: "100%",
@@ -12,6 +12,7 @@ const commonStyle = {
 
 const commentDisplay = {
         ...commonStyle,
+        resize: "none",
         outline: "none",
         wordWrap: "break-word",
         overflow: "hidden",
