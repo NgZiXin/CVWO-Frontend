@@ -1,8 +1,14 @@
-import apiUrl from "../data/apiUrl";
 import React from "react";
 import { MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
-const logoutUrl = `${apiUrl}/logout`;
+const clearAllCookies = (): void => {
+    const cookies = document.cookie.split("; ");
+
+    for (const cookie of cookies) {
+        const [name] = cookie.split("=");
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    }
+};
 
 const Logout: React.FC = () => {
     const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -13,26 +19,8 @@ const Logout: React.FC = () => {
 
     const handleConfirmDelete = () => {
         setDialogOpen(false);
-        const logout = async () => {
-            try {
-                const response = await fetch(logoutUrl, {
-                    method: "DELETE",
-                    mode: "cors",
-                    credentials: "include",
-                });
-                if (response.ok) {
-                    window.location.href = "/";
-                } else {
-                    const errorData = await response.json();
-                    if (errorData && errorData.message) {
-                        console.log(errorData.message);
-                    }
-                }
-            } catch (err) {
-                console.error(`Error: ${err}`);
-            }
-        };
-        logout();
+        clearAllCookies();
+        window.location.reload();
     };
 
     const handleCancelDelete = () => {

@@ -7,6 +7,7 @@ import CommentList from "../components/CommentList";
 import Thread from "../types/Thread";
 import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
+import getJWT from "../utils/getJWT";
 import { Container, Box, Button, Grid, Typography } from "@mui/material";
 import { useParams, Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
@@ -24,7 +25,9 @@ const ThreadView: React.FC = () => {
             const response = await fetch(threadUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const thread = await response.json();

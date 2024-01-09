@@ -2,6 +2,7 @@ import LoginAlert from "./LoginAlert";
 import CommentCreateProps from "../types/CommentCreateProps";
 import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
+import getJWT from "../utils/getJWT";
 import { Button, Box, Alert, Snackbar, TextField, TextareaAutosize, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import React from "react";
@@ -33,8 +34,10 @@ const CommentCreate: React.FC<CommentCreateProps> = (props) => {
                     const response = await fetch(createUrl, {
                         method: "POST",
                         mode: "cors",
+                        headers: {
+                            Authorization: `Bearer ${getJWT()}`,
+                        },
                         body: data,
-                        credentials: "include",
                     });
                     if (response.ok) {
                         clearField();

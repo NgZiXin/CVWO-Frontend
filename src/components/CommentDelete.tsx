@@ -1,5 +1,6 @@
 import CommentDeleteProps from "../types/CommentDelete";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
@@ -21,7 +22,9 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
                 const response = await fetch(deleteUrl, {
                     method: "DELETE",
                     mode: "cors",
-                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                 });
                 if (response.ok) {
                     window.location.reload();

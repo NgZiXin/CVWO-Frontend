@@ -1,6 +1,7 @@
 import LoginFormFields from "../types/LoginFormFields";
 import LoginProps from "../types/LoginProps";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import React from "react";
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -42,10 +43,15 @@ const Login: React.FC<LoginProps> = (props) => {
                 const response = await fetch(loginUrl, {
                     method: "POST",
                     mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                     body: data,
-                    credentials: "include",
                 });
                 if (response.ok) {
+                    const response_items = await response.json();
+                    document.cookie = `user_id=${response_items.user.id}; Secure`;
+                    document.cookie = `JWT=${response_items.token}; Secure`;
                     handleClose();
                     props.callback();
                 } else {

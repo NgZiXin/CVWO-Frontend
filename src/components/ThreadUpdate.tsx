@@ -2,6 +2,7 @@ import ThreadFormFields from "../types/ThreadFormFields";
 import ThreadUpdateProps from "../types/ThreadUpdateProps";
 import categories from "../data/categories";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import {
     Button,
     TextField,
@@ -41,7 +42,9 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
                     method: "PATCH",
                     mode: "cors",
                     body: data,
-                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                 });
                 if (response.ok) {
                     handleReset();

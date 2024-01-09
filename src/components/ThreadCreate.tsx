@@ -2,6 +2,7 @@ import LoginAlert from "./LoginAlert";
 import ThreadFormFields from "../types/ThreadFormFields";
 import categories from "../data/categories";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import ThreadCreateProps from "../types/ThreadCreateProps";
 import getUserId from "../utils/getUserId";
 import {
@@ -48,8 +49,10 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
                 const response = await fetch(createUrl, {
                     method: "POST",
                     mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                     body: data,
-                    credentials: "include",
                 });
                 if (response.ok) {
                     handleReset();

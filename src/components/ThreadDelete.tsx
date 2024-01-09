@@ -1,5 +1,6 @@
 import ThreadDeleteProp from "../types/ThreadDeleteProps";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
@@ -21,7 +22,9 @@ const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
                 const response = await fetch(deleteUrl, {
                     method: "DELETE",
                     mode: "cors",
-                    credentials: "include",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                 });
                 if (response.ok) {
                     window.history.back();

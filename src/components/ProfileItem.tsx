@@ -1,6 +1,7 @@
 import ProfileItemProps from "../types/ProfileItemProps";
 import ProfileItemFields from "../types/ProfileItemFields";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import countries from "../data/countries";
 import { Grid, Button, MenuItem, Typography, TextField, Snackbar, Alert } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -52,8 +53,10 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
                 const response = await fetch(patchUrl, {
                     method: "PATCH",
                     mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                     body: data,
-                    credentials: "include",
                 });
                 if (response.ok) {
                     openSuccessAlert();

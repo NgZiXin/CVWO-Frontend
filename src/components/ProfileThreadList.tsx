@@ -2,6 +2,7 @@ import History from "../types/History";
 import ProfileThreadListProps from "../types/ProfileThreadListProps";
 import HistoryFilter from "../types/HistoryFilter";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import { Typography, Grid, List, ListItem, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
@@ -15,7 +16,9 @@ const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
             const response = await fetch(historyUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const response_items = await response.json();

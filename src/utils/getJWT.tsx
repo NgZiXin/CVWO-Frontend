@@ -1,12 +1,12 @@
-const getUserId = (): number | null => {
+const getJWT = (): string | null => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
         const [name, value] = cookie.split("=");
-        if (name === "user_id") {
-            return parseInt(value, 10);
+        if (name === "JWT") {
+            return value;
         }
     }
     return null;
 };
 
-export default getUserId;
+export default getJWT;

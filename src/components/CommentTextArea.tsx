@@ -1,25 +1,26 @@
 import CommentTextAreaProps from "../types/CommentTextAreaProps";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import React from "react";
 import { TextareaAutosize, Button, Alert, Snackbar } from "@mui/material";
 
-const commonStyle = {
+const commonStyle: React.CSSProperties = {
     width: "100%",
     fontSize: "1rem",
     borderRadius: "4px",
     border: "none",
+    resize: "none",
 };
 
-const commentDisplay = {
+const commentDisplay: React.CSSProperties = {
     ...commonStyle,
-    resize: "none",
     outline: "none",
     wordWrap: "break-word",
     overflow: "hidden",
     textOverflow: "ellipsis",
 };
 
-const commentUpdate = {
+const commentUpdate: React.CSSProperties = {
     ...commonStyle,
     outline: "2px solid #ccc",
 };
@@ -45,8 +46,10 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
                 const response = await fetch(patchUrl, {
                     method: "PATCH",
                     mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                     body: data,
-                    credentials: "include",
                 });
                 if (response.ok) {
                     props.closeUpdate();

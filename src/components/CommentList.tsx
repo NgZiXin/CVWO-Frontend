@@ -2,6 +2,7 @@ import CommentItem from "./CommentItem";
 import Comment from "../types/Comment";
 import CommentListProp from "../types/CommentListProps";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import { Typography, Grid } from "@mui/material";
 import React from "react";
 
@@ -14,7 +15,9 @@ const CommentList: React.FC<CommentListProp> = (props) => {
             const response = await fetch(commentsUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const comments = await response.json();

@@ -2,6 +2,7 @@ import LoginAlert from "./LoginAlert";
 import ThreadLikeProp from "../types/ThreadLikeProps";
 import Like from "../types/Like";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import getUserId from "../utils/getUserId";
 import { Checkbox, Typography, Box } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
@@ -19,7 +20,9 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
             const response = await fetch(likesUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const likes = await response.json();
@@ -69,7 +72,9 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
                         const response = await fetch(deleteUrl, {
                             method: "DELETE",
                             mode: "cors",
-                            credentials: "include",
+                            headers: {
+                                Authorization: `Bearer ${getJWT()}`,
+                            },
                         });
                         if (response.ok) {
                             getLikes();
@@ -97,9 +102,9 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
                         mode: "cors",
                         headers: {
                             "Content-Type": "application/json",
+                            Authorization: `Bearer ${getJWT()}`,
                         },
                         body: JSON.stringify({ like: { main_thread_id: props.main_thread_id } }),
-                        credentials: "include",
                     });
                     if (response.ok) {
                         getLikes();

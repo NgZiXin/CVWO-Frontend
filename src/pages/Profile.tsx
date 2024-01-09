@@ -3,6 +3,7 @@ import ProfileItem from "../components/ProfileItem";
 import HistoryFilter from "../types/HistoryFilter";
 import User from "../types/User";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import {
     Container,
     Grid,
@@ -27,7 +28,9 @@ const Profile: React.FC = () => {
             const response = await fetch(meUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const userData = await response.json();

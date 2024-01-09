@@ -1,6 +1,7 @@
 import ThreadItem from "./ThreadItem";
 import Thread from "../types/Thread";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import ThreadListProps from "../types/ThreadListProps";
 import React from "react";
 import { Typography, Grid, Link } from "@mui/material";
@@ -14,7 +15,9 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
             const response = await fetch(threadListUrl, {
                 method: "GET",
                 mode: "cors",
-                credentials: "include",
+                headers: {
+                    Authorization: `Bearer ${getJWT()}`,
+                },
             });
             if (response.ok) {
                 const response_items = await response.json();

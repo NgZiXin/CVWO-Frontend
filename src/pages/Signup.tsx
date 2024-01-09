@@ -1,6 +1,7 @@
 import SignupFormFields from "../types/SignupFormFields";
 import countries from "../data/countries";
 import apiUrl from "../data/apiUrl";
+import getJWT from "../utils/getJWT";
 import React from "react";
 import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -50,8 +51,10 @@ const Signup: React.FC = () => {
                 const response = await fetch(signupUrl, {
                     method: "POST",
                     mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${getJWT()}`,
+                    },
                     body: data,
-                    credentials: "include",
                 });
                 if (response.ok) {
                     window.location.href = "/successfulsignup";
