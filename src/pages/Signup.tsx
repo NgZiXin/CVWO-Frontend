@@ -57,6 +57,9 @@ const Signup: React.FC = () => {
                     body: data,
                 });
                 if (response.ok) {
+                    const response_items = await response.json();
+                    document.cookie = `user_id=${response_items.user.id}; Secure`;
+                    document.cookie = `JWT=${response_items.token}; Secure`;
                     window.location.href = "/successfulsignup";
                 } else {
                     const errorData = await response.json();

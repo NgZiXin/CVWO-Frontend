@@ -9,7 +9,7 @@ const SuccessfulSignup: React.FC = () => {
                 <Typography variant="h5"> {"Thank you for signing up."}</Typography>
                 <br />
                 <Typography color="textSecondary" variant="body2">
-                    {"Please go back to the home page and login"}
+                    {"You have been automatically signed in."}
                 </Typography>
                 <Link to="/">
                     <Button variant="contained" style={{ marginTop: "0.5rem" }}>
