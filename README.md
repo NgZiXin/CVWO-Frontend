@@ -28,7 +28,7 @@ yarn install
 yarn start
 ```
 
-7. Open [http://localhost:3001](http://localhost:3001) to view it in the browser. **Important** If not using localhost:3001, do edit CORS in the [backend](https://github.com/NgZiXin/CVWO-Backend) to reflect your frontend client url.
+7. Open [http://localhost:3001](http://localhost:3001) (or any respective localhost used).
 
 8. You should see a page like this.
    ![Basic Page](public/images/HomePage.png)
