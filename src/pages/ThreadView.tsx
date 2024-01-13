@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import ThreadItemView from "../components/ThreadItemView";
 import ThreadUpdate from "../components/ThreadUpdate";
 import ThreadDelete from "../components/ThreadDelete";
@@ -33,6 +34,7 @@ const ThreadView: React.FC = () => {
                 const thread = await response.json();
                 setThread(thread);
             } else {
+                setDisplayNotFound(true);
                 const errorData = await response.json();
                 if (errorData && errorData.message) {
                     console.log(errorData.message);
@@ -46,13 +48,16 @@ const ThreadView: React.FC = () => {
         getThread();
     }, []);
 
+    // Logic to set Not Found page
+    const [displayNotFound, setDisplayNotFound] = React.useState<boolean>(false);
+
     // Logic for re-rendering comments list upon creation of new comment
     const [toggle, setToggle] = React.useState<boolean>(true);
     const reRenderComments = () => setToggle(!toggle);
 
     return (
         <>
-            {thread && (
+            {thread ? (
                 <Container>
                     <Grid container sx={{ justifyContent: "flex-start", alignItems: "center" }}>
                         <Link to={"/"} style={{ textDecoration: "none" }}>
@@ -92,6 +97,8 @@ const ThreadView: React.FC = () => {
                     <br />
                     <CommentList main_thread_id={thread.id} toggle={toggle} />
                 </Container>
+            ) : (
+                displayNotFound && <NotFound />
             )}
         </>
     );

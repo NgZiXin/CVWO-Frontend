@@ -2,14 +2,13 @@ import React from "react";
 import { Typography, Button, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const SuccessfulSignup: React.FC = () => {
+const NotFound: React.FC = () => {
     return (
         <>
             <Container sx={{ textAlign: "center" }}>
-                <Typography variant="h5">{"Thank you for signing up."}</Typography>
-                <br />
+                <Typography variant="h1">{"404"}</Typography>
                 <Typography color="textSecondary" variant="body2">
-                    {"You have been automatically signed in."}
+                    {"Not Found"}
                 </Typography>
                 <Link to="/">
                     <Button variant="outlined" sx={{ mt: "0.5rem" }}>
@@ -21,4 +20,4 @@ const SuccessfulSignup: React.FC = () => {
     );
 };
 
-export default SuccessfulSignup;
+export default NotFound;

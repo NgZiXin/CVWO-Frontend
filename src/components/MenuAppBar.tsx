@@ -22,7 +22,11 @@ const MenuAppBar: React.FC = () => {
         <AppBar position="static" sx={{ backgroundColor: "#ffffff", color: (theme) => theme.palette.primary.main }}>
             <Toolbar>
                 <Grid container sx={{ height: "7em" }}>
-                    <Grid item xs={11} sx={{ whiteSpace: "pre", textAlign: "left", wordBreak: "break-word" }}>
+                    <Grid
+                        item
+                        xs={10}
+                        sx={{ whiteSpace: "pre", textAlign: "left", wordBreak: "break-word", overflow: "hidden" }}
+                    >
                         <pre>
                             {" _______ _______ _______      _______              __                            "}
                             <br />
@@ -44,7 +48,7 @@ const MenuAppBar: React.FC = () => {
                             />
                         </pre>
                     </Grid>
-                    <Grid item xs={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Grid item xs={2} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                         {userId ? (
                             <>
                                 <IconButton sx={{ color: "#003D7C" }} onClick={handleMenu}>

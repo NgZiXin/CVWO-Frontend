@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import ProfileThreadList from "../components/ProfileThreadList";
 import ProfileItem from "../components/ProfileItem";
 import HistoryFilter from "../types/HistoryFilter";
@@ -36,6 +37,7 @@ const Profile: React.FC = () => {
                 const userData = await response.json();
                 setUserData(userData);
             } else {
+                setDisplayNotFound(true);
                 const errorData = await response.json();
                 if (errorData && errorData.message) {
                     console.log(errorData.message);
@@ -48,6 +50,9 @@ const Profile: React.FC = () => {
     React.useEffect(() => {
         getUserData();
     }, []);
+
+    // Logic to set Not Found page
+    const [displayNotFound, setDisplayNotFound] = React.useState<boolean>(false);
 
     // Logic to filter history list
     const [historyFilter, setHistoryFilter] = React.useState<HistoryFilter>({
@@ -73,7 +78,7 @@ const Profile: React.FC = () => {
 
     return (
         <>
-            {userData && (
+            {userData ? (
                 <Container>
                     <Grid container sx={{ justifyContent: "flex-start", alignItems: "center" }}>
                         <Link to={"/"}>
@@ -142,6 +147,8 @@ const Profile: React.FC = () => {
                         </CardContent>
                     </Card>
                 </Container>
+            ) : (
+                displayNotFound && <NotFound />
             )}
         </>
     );
