@@ -10,13 +10,14 @@ import apiUrl from "../data/apiUrl";
 import getUserId from "../utils/getUserId";
 import getJWT from "../utils/getJWT";
 import { Container, Box, Button, Grid, Typography } from "@mui/material";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 import React from "react";
 
 const ThreadView: React.FC = () => {
     const userId: number | null = getUserId();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     // Logic to query for thread
     const threadUrl: string = `${apiUrl}/main_threads/${id}`;
@@ -55,16 +56,17 @@ const ThreadView: React.FC = () => {
     const [toggle, setToggle] = React.useState<boolean>(true);
     const reRenderComments = () => setToggle(!toggle);
 
+    // Logic for back button
+    const handleBack = () => navigate(-1);
+
     return (
         <>
             {thread ? (
                 <Container>
                     <Grid container sx={{ justifyContent: "flex-start", alignItems: "center" }}>
-                        <Link to={"/"} style={{ textDecoration: "none" }}>
-                            <Button color="primary" variant="outlined">
-                                {"Back to threads"}
-                            </Button>
-                        </Link>
+                        <Button color="primary" variant="outlined" onClick={handleBack}>
+                            {"Back"}
+                        </Button>
                         {!userId && (
                             <Typography variant="body2" component="div" color="textSecondary" sx={{ ml: "1rem" }}>
                                 <Typewriter

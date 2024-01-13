@@ -2,10 +2,11 @@ import SignupFormFields from "../types/SignupFormFields";
 import countries from "../data/countries";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import React from "react";
 import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
+import React from "react";
 
 const signupUrl: string = `${apiUrl}/users/signup`;
 
@@ -17,6 +18,8 @@ const defaultFields: SignupFormFields = {
 };
 
 const Signup: React.FC = () => {
+    const navigate = useNavigate();
+
     // Logic for form
     const [fields, setFields] = React.useState<SignupFormFields>(defaultFields);
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +44,7 @@ const Signup: React.FC = () => {
     };
 
     // Logic for buttons
-    const handleBack = () => window.history.back();
+    const handleBack = () => navigate(-1);
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;

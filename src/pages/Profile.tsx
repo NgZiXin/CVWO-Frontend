@@ -16,12 +16,14 @@ import {
     Checkbox,
     Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
 
 const meUrl: string = `${apiUrl}/me`;
 
 const Profile: React.FC = () => {
+    const navigate = useNavigate();
+
     // Logic to query for profile data
     const [userData, setUserData] = React.useState<User>();
     const getUserData = async () => {
@@ -76,16 +78,17 @@ const Profile: React.FC = () => {
         });
     };
 
+    // Logic for back button
+    const handleBack = () => navigate(-1);
+
     return (
         <>
             {userData ? (
                 <Container>
                     <Grid container sx={{ justifyContent: "flex-start", alignItems: "center" }}>
-                        <Link to={"/"}>
-                            <Button color="primary" variant="outlined">
-                                {"Back to threads"}
-                            </Button>
-                        </Link>
+                        <Button color="primary" variant="outlined" onClick={handleBack}>
+                            {"Back"}
+                        </Button>
                     </Grid>
                     <br />
                     <ProfileItem user={userData} callback={getUserData} />
