@@ -23,7 +23,7 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
             });
             if (response.ok) {
                 const response_items = await response.json();
-                setThreads(response_items.main_threads.reverse());
+                setThreads(response_items.main_threads);
             } else {
                 const errorData = await response.json();
                 if (errorData && errorData.message) {
@@ -35,7 +35,7 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
         }
     };
     React.useEffect(() => {
-        getThreads();
+        getThreads().then(() => sortByDate());
     }, [props]);
 
     // Logic for sorting
