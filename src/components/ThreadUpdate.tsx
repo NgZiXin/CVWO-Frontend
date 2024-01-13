@@ -3,26 +3,19 @@ import ThreadUpdateProps from "../types/ThreadUpdateProps";
 import categories from "../data/categories";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import {
-    Button,
-    TextField,
-    MenuItem,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Snackbar,
-    Alert,
-} from "@mui/material";
+import { Button, TextField, MenuItem, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
 import React from "react";
 
 const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
-    const patchUrl = `${apiUrl}/main_threads/${props.thread.id}`;
+    const { thread, callback } = props;
+    const patchUrl: string = `${apiUrl}/main_threads/${thread.id}`;
     const defaultFields: ThreadFormFields = {
-        title: props.thread.title,
-        body: props.thread.body,
-        category_id: props.thread.category_id,
+        title: thread.title,
+        body: thread.body,
+        category_id: thread.category_id,
     };
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
 
     // Logic for Button
     const [open, setOpen] = React.useState<boolean>(false);
@@ -35,10 +28,10 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
-        const data = new FormData(FormElement);
+        const data: FormData = new FormData(FormElement);
         const updateThread = async () => {
             try {
-                const response = await fetch(patchUrl, {
+                const response: Response = await fetch(patchUrl, {
                     method: "PATCH",
                     mode: "cors",
                     body: data,
@@ -49,8 +42,8 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
                 if (response.ok) {
                     handleReset();
                     handleClose();
-                    props.reRender();
-                    openSuccessAlert();
+                    callback();
+                    setAlertMessage("Thread Updated Successfully!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {
@@ -79,11 +72,6 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
             return { ...prevState, category_id: newCategory };
         });
     };
-
-    // Logic for Success Alert
-    const [successAlert, setSuccessAlert] = React.useState<boolean>(false);
-    const openSuccessAlert = () => setSuccessAlert(true);
-    const closeSuccessAlert = () => setSuccessAlert(false);
 
     return (
         <>
@@ -150,21 +138,6 @@ const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
                     </DialogActions>
                 </form>
             </Dialog>
-            {successAlert && (
-                <>
-                    <Snackbar
-                        open={successAlert}
-                        autoHideDuration={6000}
-                        onClose={closeSuccessAlert}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                    >
-                        <Alert severity="success">{"Updated thread successfully!"}</Alert>
-                    </Snackbar>
-                </>
-            )}
         </>
     );
 };

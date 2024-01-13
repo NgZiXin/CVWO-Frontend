@@ -7,13 +7,16 @@ import { Typography, Grid, List, ListItem, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 
+const historyUrl: string = `${apiUrl}/me/history`;
+
 const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
+    const { historyFilter } = props;
+
     //Logic to query for user's history
-    const historyUrl = `${apiUrl}/me/history`;
     const [history, setHistory] = React.useState<History[]>([]);
     const getHistory = async () => {
         try {
-            const response = await fetch(historyUrl, {
+            const response: Response = await fetch(historyUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -48,7 +51,7 @@ const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
                     (historyFilter.like && record.activity === "like"),
             ),
         );
-    React.useEffect(() => getFilteredHistory(props.historyFilter), [history, props]);
+    React.useEffect(() => getFilteredHistory(historyFilter), [history, props]);
 
     return (
         <>

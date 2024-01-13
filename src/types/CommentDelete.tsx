@@ -1,5 +1,6 @@
 type CommentDeleteProps = {
-    comment_id: number
+    comment_id: number;
+    callback: () => void;
 };
 
 export default CommentDeleteProps;

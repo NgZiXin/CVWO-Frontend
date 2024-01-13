@@ -1,13 +1,15 @@
 import UserInfo from "./UserInfo";
 import ThreadItemViewProps from "../types/ThreadItemViewProps";
 import ThreadItemViewTheme from "../themes/ThreadItemViewTheme";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
+    const { thread } = props;
+
     return (
         <>
             <ThemeProvider theme={ThreadItemViewTheme}>
@@ -20,37 +22,45 @@ const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
                 >
                     <CardContent>
                         <Typography variant="h5" sx={{ wordBreak: "break-word", textAlign: "justify" }}>
-                            {props.thread.title}
+                            {thread.title}
                         </Typography>
-                        <Box
+                        <Grid
+                            container
                             sx={{
-                                display: "flex",
                                 alignItems: "center",
-                                width: "auto",
                             }}
                         >
-                            {props.thread.user.country === "--" ? (
+                            {thread.user.country === "--" ? (
                                 <LanguageIcon style={{ width: "1rem", height: "1rem" }} />
                             ) : (
                                 <ReactCountryFlag
-                                    countryCode={props.thread.user.country}
+                                    countryCode={thread.user.country}
                                     svg
                                     style={{ width: "1rem", height: "1rem" }}
                                 />
                             )}
                             <Typography color="textSecondary" variant="body2" component="div" sx={{ ml: "0.5rem" }}>
-                                <UserInfo user={props.thread.user} />
-                                {` created at ${props.thread.created_at.toLocaleString()}.`}
-                                {props.thread.created_at != props.thread.updated_at ? " [Edited]" : ""}
+                                <UserInfo user={thread.user} />
+                                {` created at ${thread.created_at.toLocaleString()}.`}
+                                {thread.created_at != thread.updated_at ? " [Edited]" : ""}
                             </Typography>
-                        </Box>
-                        <Typography
-                            variant="body1"
-                            component="p"
-                            sx={{ mt: "0.2rem", minHeight: "5rem", whiteSpace: "pre-line", textAlign: "justify" }}
-                        >
-                            {props.thread.body}
-                        </Typography>
+                        </Grid>
+                        <Grid container>
+                            <Typography
+                                variant="body1"
+                                component="p"
+                                sx={{
+                                    mt: "0.2rem",
+                                    wordBreak: "break-word",
+                                    overflowWrap: "break-word",
+                                    minHeight: "5rem",
+                                    whiteSpace: "pre-line",
+                                    textAlign: "justify",
+                                }}
+                            >
+                                {thread.body}
+                            </Typography>
+                        </Grid>
                     </CardContent>
                 </Card>
             </ThemeProvider>

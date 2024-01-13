@@ -18,14 +18,14 @@ import {
 import { Link } from "react-router-dom";
 import React from "react";
 
-const meUrl = `${apiUrl}/me`;
+const meUrl: string = `${apiUrl}/me`;
 
 const Profile: React.FC = () => {
     // Logic to query for profile data
     const [userData, setUserData] = React.useState<User>();
     const getUserData = async () => {
         try {
-            const response = await fetch(meUrl, {
+            const response: Response = await fetch(meUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -49,6 +49,7 @@ const Profile: React.FC = () => {
         getUserData();
     }, []);
 
+    // Logic to filter history list
     const [historyFilter, setHistoryFilter] = React.useState<HistoryFilter>({
         post: true,
         comment: true,
@@ -82,7 +83,7 @@ const Profile: React.FC = () => {
                         </Link>
                     </Grid>
                     <br />
-                    <ProfileItem user={userData} reRender={getUserData} />
+                    <ProfileItem user={userData} callback={getUserData} />
                     <br />
                     <Card variant="outlined">
                         <CardContent>

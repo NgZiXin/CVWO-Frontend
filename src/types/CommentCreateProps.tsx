@@ -1,6 +1,6 @@
 type CommentCreateProps = {
     main_thread_id: number;
-    reRender: () => void;
+    callback: () => void;
 };
 
 export default CommentCreateProps;

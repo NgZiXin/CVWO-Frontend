@@ -1,6 +1,6 @@
 import ThreadItemProps from "../types/ThreadItemProps";
 import ThreadItemTheme from "../themes/ThreadItemTheme";
-import { Card, CardContent, CardActionArea, Typography, Box } from "@mui/material";
+import { Card, CardContent, CardActionArea, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -8,6 +8,8 @@ import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ThreadItem: React.FC<ThreadItemProps> = (props) => {
+    const { thread } = props;
+
     return (
         <>
             <ThemeProvider theme={ThreadItemTheme}>
@@ -20,9 +22,10 @@ const ThreadItem: React.FC<ThreadItemProps> = (props) => {
                         border: "1px solid #ccc",
                     }}
                 >
-                    <CardActionArea component={Link} to={`/thread/${props.thread.id}`}>
+                    <CardActionArea component={Link} to={`/thread/${thread.id}`}>
                         <CardContent>
-                            <Box
+                            <Grid
+                                container
                                 sx={{
                                     wordWrap: "break-word",
                                     overflow: "hidden",
@@ -34,33 +37,30 @@ const ThreadItem: React.FC<ThreadItemProps> = (props) => {
                                 }}
                             >
                                 <Typography variant="h5" component="h5">
-                                    {props.thread.title}
+                                    {thread.title}
                                 </Typography>
-                            </Box>
-                            <Box
+                            </Grid>
+                            <Grid
+                                container
                                 sx={{
-                                    display: "flex",
                                     alignItems: "center",
-                                    width: "auto",
                                 }}
                             >
-                                {props.thread.user.country === "--" ? (
+                                {thread.user.country === "--" ? (
                                     <LanguageIcon style={{ width: "1rem", height: "1rem" }} />
                                 ) : (
                                     <ReactCountryFlag
-                                        countryCode={props.thread.user.country}
+                                        countryCode={thread.user.country}
                                         svg
                                         style={{ width: "1rem", height: "1rem" }}
                                     />
                                 )}
                                 <Typography color="textSecondary" variant="body2" sx={{ ml: "0.5rem" }}>
-                                    {`${
-                                        props.thread.user.username
-                                    }, created at ${props.thread.created_at.toLocaleString()}.`}
-                                    {props.thread.created_at != props.thread.updated_at ? " [Edited]" : ""}
+                                    {`${thread.user.username}, created at ${thread.created_at.toLocaleString()}.`}
+                                    {thread.created_at != thread.updated_at ? " [Edited]" : ""}
                                 </Typography>
-                            </Box>
-                            <Box sx={{ height: "2rem" }}>
+                            </Grid>
+                            <Grid container sx={{ height: "2rem" }}>
                                 <Typography
                                     variant="body1"
                                     component="p"
@@ -72,16 +72,17 @@ const ThreadItem: React.FC<ThreadItemProps> = (props) => {
                                         display: "-webkit-box",
                                         WebkitLineClamp: 2,
                                         WebkitBoxOrient: "vertical",
+                                        whiteSpace: "pre-line",
                                     }}
                                 >
-                                    {props.thread.body}
+                                    {thread.body}
                                 </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                            </Grid>
+                            <Grid container sx={{ justifyContent: "flex-end" }}>
                                 <Typography color="textSecondary" variant="body2">
-                                    {`Likes: ${props.thread.numLikes}`}
+                                    {`Likes: ${thread.numLikes}`}
                                 </Typography>
-                            </Box>
+                            </Grid>
                         </CardContent>
                     </CardActionArea>
                 </Card>

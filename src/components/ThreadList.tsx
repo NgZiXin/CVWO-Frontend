@@ -3,16 +3,18 @@ import Thread from "../types/Thread";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
 import ThreadListProps from "../types/ThreadListProps";
-import React from "react";
 import { Typography, Grid, Link } from "@mui/material";
+import React from "react";
 
 const ThreadList: React.FC<ThreadListProps> = (props) => {
+    const { categoryId } = props;
+    const threadListUrl: string = `${apiUrl}/categories/${categoryId}`;
+
     // Logic to query thread list
-    const threadListUrl = `${apiUrl}/categories/${props.categoryId}`;
     const [threads, setThreads] = React.useState<Thread[]>([]);
     const getThreads = async () => {
         try {
-            const response = await fetch(threadListUrl, {
+            const response: Response = await fetch(threadListUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -34,10 +36,10 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
     };
     React.useEffect(() => {
         getThreads();
-    }, [props.categoryId, props.toggle]);
+    }, [props]);
 
     // Logic for sorting
-    const sortByDate = (): void => {
+    const sortByDate = () => {
         setThreads((threads) =>
             threads.slice().sort((threadA, threadB) => {
                 const dateA = new Date(threadA.created_at);
@@ -46,7 +48,7 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
             }),
         );
     };
-    const sortByLikes = (): void => {
+    const sortByLikes = () => {
         setThreads((threads) => threads.slice().sort((threadA, threadB) => threadB.numLikes - threadA.numLikes));
     };
 
@@ -76,9 +78,11 @@ const ThreadList: React.FC<ThreadListProps> = (props) => {
                     </Link>
                 </Typography>
             </Grid>
-            {threads.map((thread) => (
-                <ThreadItem key={thread.id} thread={thread} />
-            ))}
+            <ul style={{ paddingInlineStart: "unset" }}>
+                {threads.map((thread) => (
+                    <ThreadItem key={thread.id} thread={thread} />
+                ))}
+            </ul>
         </>
     );
 };

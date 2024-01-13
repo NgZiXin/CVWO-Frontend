@@ -1,5 +1,5 @@
 type ThreadCreateProps = {
-    reRender: () => void
+    callback: () => void;
 };
 
 export default ThreadCreateProps;

@@ -1,28 +1,31 @@
-import React from "react";
+import LogoutProps from "../types/LogoutProps";
 import { MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
+import React from "react";
 
-const clearAllCookies = (): void => {
-    const cookies = document.cookie.split("; ");
-
+const clearAllCookies = () => {
+    const cookies: string[] = document.cookie.split("; ");
     for (const cookie of cookies) {
         const [name] = cookie.split("=");
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
 };
 
-const Logout: React.FC = () => {
-    const [isDialogOpen, setDialogOpen] = React.useState(false);
+const Logout: React.FC<LogoutProps> = (props) => {
+    const { callback } = props;
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
 
+    // Logic for Logout button
+    const [isDialogOpen, setDialogOpen] = React.useState(false);
     const handleDeleteClick = () => {
         setDialogOpen(true);
     };
-
     const handleConfirmDelete = () => {
-        setDialogOpen(false);
         clearAllCookies();
-        window.location.reload();
+        callback();
+        setDialogOpen(false);
+        setAlertMessage("Successfully Logged out!");
     };
-
     const handleCancelDelete = () => {
         setDialogOpen(false);
     };

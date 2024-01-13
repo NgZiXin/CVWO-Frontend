@@ -3,16 +3,18 @@ import Comment from "../types/Comment";
 import CommentListProp from "../types/CommentListProps";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import React from "react";
 
 const CommentList: React.FC<CommentListProp> = (props) => {
+    const { main_thread_id } = props;
+    const commentsUrl: string = `${apiUrl}/main_threads/${main_thread_id}/comments`;
+
     // Logic to query for comments
-    const commentsUrl = `${apiUrl}/main_threads/${props.main_thread_id}/comments`;
     const [comments, setComments] = React.useState<Comment[]>([]);
     const getComments = async () => {
         try {
-            const response = await fetch(commentsUrl, {
+            const response: Response = await fetch(commentsUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -34,18 +36,20 @@ const CommentList: React.FC<CommentListProp> = (props) => {
     };
     React.useEffect(() => {
         getComments();
-    }, [props.toggle]);
+    }, [props]);
 
     return (
         <>
-            <Grid container sx={{ justifyContent: "flex-start" }}>
-                <Typography variant="body2">{`Total number of comments: ${comments.length}`}</Typography>
-            </Grid>
-            <ul style={{ paddingInlineStart: "unset" }}>
-                {comments.map((comment) => (
-                    <CommentItem key={comment.id} comment={comment} reRender={getComments} />
-                ))}
-            </ul>
+            <Box sx={{ width: "90%", margin: "auto" }}>
+                <Grid container sx={{ justifyContent: "flex-start" }}>
+                    <Typography variant="body2">{`Total number of comments: ${comments.length}`}</Typography>
+                </Grid>
+                <ul style={{ paddingInlineStart: "unset" }}>
+                    {comments.map((comment) => (
+                        <CommentItem key={comment.id} comment={comment} callback={getComments} />
+                    ))}
+                </ul>
+            </Box>
         </>
     );
 };

@@ -1,3 +1,4 @@
+import Base from "./layouts/Base";
 import Home from "./pages/Home";
 import ThreadView from "./pages/ThreadView";
 import Signup from "./pages/Signup";
@@ -14,11 +15,13 @@ const App: React.FC = () => {
             <ThemeProvider theme={AppTheme}>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/successfulsignup" element={<SuccessfulSignup />} />
-                        <Route path="/thread/:id" element={<ThreadView />} />
+                        <Route element={<Base />}>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/successfulsignup" element={<SuccessfulSignup />} />
+                            <Route path="/thread/:id" element={<ThreadView />} />
+                        </Route>
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>

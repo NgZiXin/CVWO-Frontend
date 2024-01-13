@@ -16,6 +16,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 
 const UserInfo: React.FC<UserInfoProps> = (props) => {
+    const { user } = props;
+
     // Logic for opening dialog
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => setOpen(() => true);
@@ -30,12 +32,12 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
         }
         return "Not Specified";
     };
-    const countryName = getCountryName(props.user.country);
+    const countryName: string = getCountryName(user.country);
 
     return (
         <>
             <Link component="button" onClick={handleOpen}>
-                <Typography variant="inherit" color="textSecondary">{`${props.user.username}`}</Typography>
+                <Typography variant="inherit" color="textSecondary">{`${user.username}`}</Typography>
             </Link>
             <Dialog open={open} maxWidth="sm" fullWidth>
                 <DialogTitle>{"User Info:"}</DialogTitle>
@@ -45,7 +47,7 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
                             <Grid item xs={2}>
                                 <Typography sx={{ color: "black" }}>{"Username:"}</Typography>
                             </Grid>
-                            <Grid item>{`${props.user.username}`}</Grid>
+                            <Grid item>{`${user.username}`}</Grid>
                         </Grid>
                         <br />
                         <Grid container>
@@ -54,11 +56,11 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
                             </Grid>
                             <Grid item>{countryName}</Grid>
                             <Grid item>
-                                {props.user.country === "--" ? (
+                                {user.country === "--" ? (
                                     <LanguageIcon style={{ marginLeft: "0.5rem", width: "1rem", height: "1rem" }} />
                                 ) : (
                                     <ReactCountryFlag
-                                        countryCode={props.user.country}
+                                        countryCode={user.country}
                                         svg
                                         style={{
                                             width: "1rem",
@@ -74,7 +76,7 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
                             <Grid item xs={2}>
                                 <Typography sx={{ color: "black" }}>{"Bio:"}</Typography>
                             </Grid>
-                            <Grid item>{props.user.bio}</Grid>
+                            <Grid item>{user.bio}</Grid>
                         </Grid>
                     </DialogContentText>
                 </DialogContent>

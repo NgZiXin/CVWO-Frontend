@@ -1,11 +1,14 @@
 import CommentDeleteProps from "../types/CommentDelete";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
+import React from "react";
 
 const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
-    const deleteUrl = `${apiUrl}/comments/${props.comment_id}`;
+    const { comment_id, callback } = props;
+    const deleteUrl: string = `${apiUrl}/comments/${comment_id}`;
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -19,7 +22,7 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
         setDialogOpen(false);
         const deleteComment = async () => {
             try {
-                const response = await fetch(deleteUrl, {
+                const response: Response = await fetch(deleteUrl, {
                     method: "DELETE",
                     mode: "cors",
                     headers: {
@@ -27,7 +30,8 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
                     },
                 });
                 if (response.ok) {
-                    window.location.reload();
+                    callback();
+                    setAlertMessage("Comment Deleted Successfully!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {
@@ -46,7 +50,6 @@ const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
             <Button sx={{ color: "#A8ADBD" }} onClick={handleDeleteClick}>
                 {"Delete"}
             </Button>
-
             <Dialog open={isDialogOpen} onClose={handleCancelDelete}>
                 <DialogTitle>{"Confirm Delete"}</DialogTitle>
                 <DialogContent>

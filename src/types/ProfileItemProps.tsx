@@ -2,7 +2,7 @@ import User from "./User"
 
 type ProfileItemProps = {
     user: User
-    reRender: () => void
+    callback: () => void
 }
 
 export default ProfileItemProps;

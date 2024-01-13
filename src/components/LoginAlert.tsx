@@ -3,14 +3,16 @@ import React from "react";
 import { Alert, Snackbar } from "@mui/material";
 
 const LoginAlert: React.FC<LoginAlertProps> = (props) => {
+    const { loginAlert, closeLoginAlert } = props;
+
     return (
         <>
-            {props.loginAlert && (
+            {loginAlert && (
                 <>
                     <Snackbar
-                        open={props.loginAlert}
+                        open={loginAlert}
                         autoHideDuration={6000}
-                        onClose={props.closeLoginAlert}
+                        onClose={closeLoginAlert}
                         anchorOrigin={{
                             vertical: "top",
                             horizontal: "center",

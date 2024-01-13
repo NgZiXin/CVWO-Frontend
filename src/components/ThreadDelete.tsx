@@ -1,11 +1,15 @@
 import ThreadDeleteProp from "../types/ThreadDeleteProps";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import React from "react";
 
 const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
-    const deleteUrl = `${apiUrl}/main_threads/${props.main_thread_id}`;
+    const { main_thread_id } = props;
+    const deleteUrl: string = `${apiUrl}/main_threads/${main_thread_id}`;
+    const navigate = useNavigate();
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
 
     //Logic for dialog
     const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -19,7 +23,7 @@ const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
         setDialogOpen(false);
         const deleteThread = async () => {
             try {
-                const response = await fetch(deleteUrl, {
+                const response: Response = await fetch(deleteUrl, {
                     method: "DELETE",
                     mode: "cors",
                     headers: {
@@ -27,7 +31,8 @@ const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
                     },
                 });
                 if (response.ok) {
-                    window.history.back();
+                    navigate(-1);
+                    setAlertMessage("Thread Deleted Successfully!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {

@@ -1,24 +1,15 @@
 import LoginAlert from "./LoginAlert";
+import ThreadCreateProps from "../types/ThreadCreateProps";
 import ThreadFormFields from "../types/ThreadFormFields";
 import categories from "../data/categories";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
-import ThreadCreateProps from "../types/ThreadCreateProps";
 import getUserId from "../utils/getUserId";
-import {
-    Button,
-    TextField,
-    MenuItem,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Snackbar,
-    Alert,
-} from "@mui/material";
+import { Button, TextField, MenuItem, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
 import React from "react";
 
-const createUrl = `${apiUrl}/main_threads`;
+const createUrl: string = `${apiUrl}/main_threads`;
 
 const defaultFields: ThreadFormFields = {
     title: "",
@@ -27,6 +18,9 @@ const defaultFields: ThreadFormFields = {
 };
 
 const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
+    const { callback } = props;
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
+
     // Logic for Button & Authentication
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => (getUserId() ? setOpen(true) : openLoginAlert());
@@ -43,10 +37,10 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
-        const data = new FormData(FormElement);
+        const data: FormData = new FormData(FormElement);
         const createThread = async () => {
             try {
-                const response = await fetch(createUrl, {
+                const response: Response = await fetch(createUrl, {
                     method: "POST",
                     mode: "cors",
                     headers: {
@@ -57,8 +51,8 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
                 if (response.ok) {
                     handleReset();
                     handleClose();
-                    props.reRender();
-                    openSuccessAlert();
+                    callback();
+                    setAlertMessage("Thread Successfully Posted!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {
@@ -87,11 +81,6 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
             return { ...prevState, category_id: newCategory };
         });
     };
-
-    // Logic for Success Alert
-    const [successAlert, setSuccessAlert] = React.useState<boolean>(false);
-    const openSuccessAlert = () => setSuccessAlert(true);
-    const closeSuccessAlert = () => setSuccessAlert(false);
 
     return (
         <>
@@ -159,21 +148,6 @@ const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
                 </form>
             </Dialog>
             <LoginAlert loginAlert={loginAlert} closeLoginAlert={closeLoginAlert} />
-            {successAlert && (
-                <>
-                    <Snackbar
-                        open={successAlert}
-                        autoHideDuration={6000}
-                        onClose={closeSuccessAlert}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                    >
-                        <Alert severity="success">{"Posted thread successfully!"}</Alert>
-                    </Snackbar>
-                </>
-            )}
         </>
     );
 };

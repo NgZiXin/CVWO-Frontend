@@ -7,7 +7,7 @@ import { Typography, Button, TextField, Container, Grid, MenuItem } from "@mui/m
 import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 
-const signupUrl = `${apiUrl}/users/signup`;
+const signupUrl: string = `${apiUrl}/users/signup`;
 
 const defaultFields: SignupFormFields = {
     username: "",
@@ -45,10 +45,10 @@ const Signup: React.FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
-        const data = new FormData(FormElement);
+        const data: FormData = new FormData(FormElement);
         const signup = async () => {
             try {
-                const response = await fetch(signupUrl, {
+                const response: Response = await fetch(signupUrl, {
                     method: "POST",
                     mode: "cors",
                     headers: {
@@ -143,7 +143,9 @@ const Signup: React.FC = () => {
                         ))}
                     </TextField>
                     {fields.country === "--" ? (
-                        <LanguageIcon style={{ marginLeft: "2rem", marginTop: "2rem" }} />
+                        <LanguageIcon
+                            style={{ marginLeft: "2rem", marginTop: "2rem", width: "1rem", height: "1rem" }}
+                        />
                     ) : (
                         <ReactCountryFlag
                             countryCode={fields.country}
@@ -160,8 +162,8 @@ const Signup: React.FC = () => {
                         {message}
                     </Typography>
                     <Grid container justifyContent="flex-end">
-                        <Button onClick={handleBack}>Back</Button>
-                        <Button type="submit">Submit</Button>
+                        <Button onClick={handleBack}>{"Back"}</Button>
+                        <Button type="submit">{"Submit"}</Button>
                     </Grid>
                 </form>
             </Container>

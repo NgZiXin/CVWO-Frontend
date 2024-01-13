@@ -1,8 +1,9 @@
 import CommentTextAreaProps from "../types/CommentTextAreaProps";
 import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
+import { TextareaAutosize, Button, Box } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
 import React from "react";
-import { TextareaAutosize, Button, Alert, Snackbar } from "@mui/material";
 
 const commonStyle: React.CSSProperties = {
     width: "100%",
@@ -26,24 +27,26 @@ const commentUpdate: React.CSSProperties = {
 };
 
 const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
-    const patchUrl = `${apiUrl}/comments/${props.id}`;
+    const { id, body, maxRows, update, closeUpdate } = props;
+    const patchUrl: string = `${apiUrl}/comments/${id}`;
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
 
     // Logic for Text Area Form
-    const [body, setBody] = React.useState<string>(props.body);
+    const [textBody, setTextBody] = React.useState<string>(body);
     const handleBodyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setBody(() => event.target.value);
+        setTextBody(() => event.target.value);
     };
     const handleCancel = () => {
-        setBody(props.body);
-        props.closeUpdate();
+        setTextBody(body);
+        closeUpdate();
     };
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
-        const data = new FormData(FormElement);
+        const data: FormData = new FormData(FormElement);
         const updateComment = async () => {
             try {
-                const response = await fetch(patchUrl, {
+                const response: Response = await fetch(patchUrl, {
                     method: "PATCH",
                     mode: "cors",
                     headers: {
@@ -52,8 +55,8 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
                     body: data,
                 });
                 if (response.ok) {
-                    props.closeUpdate();
-                    openSuccessAlert();
+                    closeUpdate();
+                    setAlertMessage("Comment Updated Successfully!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {
@@ -67,45 +70,27 @@ const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
         updateComment();
     };
 
-    // Logic for Success Alert
-    const [successAlert, setSuccessAlert] = React.useState<boolean>(false);
-    const openSuccessAlert = () => setSuccessAlert(true);
-    const closeSuccessAlert = () => setSuccessAlert(false);
-
     return (
         <>
-            <form onSubmit={handleSubmit} autoComplete="off">
-                <TextareaAutosize
-                    id="comment_body"
-                    name="comment[body]"
-                    value={body}
-                    maxRows={props.update ? undefined : props.maxRows}
-                    style={props.update ? commentUpdate : commentDisplay}
-                    readOnly={!props.update}
-                    onChange={handleBodyChange}
-                />
-                {props.update && (
-                    <>
-                        <Button onClick={handleCancel}>{"Cancel"}</Button>
-                        <Button type="submit">{"Save"}</Button>
-                    </>
-                )}
-            </form>
-            {successAlert && (
-                <>
-                    <Snackbar
-                        open={successAlert}
-                        autoHideDuration={6000}
-                        onClose={closeSuccessAlert}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                    >
-                        <Alert severity="success">{"Updated comment successfully!"}</Alert>
-                    </Snackbar>
-                </>
-            )}
+            <Box>
+                <form onSubmit={handleSubmit} autoComplete="off">
+                    <TextareaAutosize
+                        id="comment_body"
+                        name="comment[body]"
+                        value={textBody}
+                        maxRows={update ? undefined : maxRows}
+                        style={update ? commentUpdate : commentDisplay}
+                        readOnly={!update}
+                        onChange={handleBodyChange}
+                    />
+                    {update && (
+                        <>
+                            <Button onClick={handleCancel}>{"Cancel"}</Button>
+                            <Button type="submit">{"Save"}</Button>
+                        </>
+                    )}
+                </form>
+            </Box>
         </>
     );
 };

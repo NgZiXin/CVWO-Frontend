@@ -14,15 +14,15 @@ import Typewriter from "typewriter-effect";
 import React from "react";
 
 const ThreadView: React.FC = () => {
+    const userId: number | null = getUserId();
     const { id } = useParams();
-    const userId = getUserId();
 
     // Logic to query for thread
-    const threadUrl = `${apiUrl}/main_threads/${id}`;
+    const threadUrl: string = `${apiUrl}/main_threads/${id}`;
     const [thread, setThread] = React.useState<Thread>();
     const getThread = async () => {
         try {
-            const response = await fetch(threadUrl, {
+            const response: Response = await fetch(threadUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -82,18 +82,15 @@ const ThreadView: React.FC = () => {
                         <ThreadLike main_thread_id={thread.id} />
                         {userId === thread.user_id && (
                             <Box>
-                                <ThreadUpdate thread={thread} reRender={getThread} />
+                                <ThreadUpdate thread={thread} callback={getThread} />
                                 <ThreadDelete main_thread_id={thread.id} />
                             </Box>
                         )}
                     </Grid>
-                    <Box sx={{ display: "flex", justifyContent: "center", mt: "1rem" }}>
-                        <Box component="div" sx={{ width: "90%" }}>
-                            <CommentCreate main_thread_id={thread.id} reRender={reRenderComments} />
-                            <br />
-                            <CommentList main_thread_id={thread.id} toggle={toggle} />
-                        </Box>
-                    </Box>
+                    <br />
+                    <CommentCreate main_thread_id={thread.id} callback={reRenderComments} />
+                    <br />
+                    <CommentList main_thread_id={thread.id} toggle={toggle} />
                 </Container>
             )}
         </>

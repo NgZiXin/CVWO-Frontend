@@ -2,7 +2,7 @@ import Thread from "./Thread";
 
 type ThreadUpdateProps = {
     thread: Thread;
-    reRender: () => void;
+    callback: () => void;
 };
 
 export default ThreadUpdateProps;

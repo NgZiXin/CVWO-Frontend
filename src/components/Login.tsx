@@ -4,9 +4,9 @@ import apiUrl from "../data/apiUrl";
 import getJWT from "../utils/getJWT";
 import React from "react";
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
-const loginUrl = `${apiUrl}/login`;
+const loginUrl: string = `${apiUrl}/login`;
 
 const defaultFields: LoginFormFields = {
     username: "",
@@ -14,6 +14,9 @@ const defaultFields: LoginFormFields = {
 };
 
 const Login: React.FC<LoginProps> = (props) => {
+    const { callback } = props;
+    const setAlertMessage: (message: string | null) => void = useOutletContext();
+
     // Logic for opening dialog
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => setOpen(() => true);
@@ -37,10 +40,10 @@ const Login: React.FC<LoginProps> = (props) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const FormElement = event.target as HTMLFormElement;
-        const data = new FormData(FormElement);
+        const data: FormData = new FormData(FormElement);
         const login = async () => {
             try {
-                const response = await fetch(loginUrl, {
+                const response: Response = await fetch(loginUrl, {
                     method: "POST",
                     mode: "cors",
                     headers: {
@@ -53,7 +56,8 @@ const Login: React.FC<LoginProps> = (props) => {
                     document.cookie = `user_id=${response_items.user.id}; Secure`;
                     document.cookie = `JWT=${response_items.token}; Secure`;
                     handleClose();
-                    props.callback();
+                    callback();
+                    setAlertMessage("Successfully Logged In!");
                 } else {
                     const errorData = await response.json();
                     if (errorData && errorData.message) {

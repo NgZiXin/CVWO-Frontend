@@ -10,14 +10,15 @@ import Favorite from "@mui/icons-material/Favorite";
 import React from "react";
 
 const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
+    const { main_thread_id } = props;
     const userId: number | null = getUserId();
 
     // Logic to query for thread's likes
-    const likesUrl = `${apiUrl}/main_threads/${props.main_thread_id}/likes`;
+    const likesUrl: string = `${apiUrl}/main_threads/${main_thread_id}/likes`;
     const [likes, setLikes] = React.useState<Like[]>([]);
     const getLikes = async () => {
         try {
-            const response = await fetch(likesUrl, {
+            const response: Response = await fetch(likesUrl, {
                 method: "GET",
                 mode: "cors",
                 headers: {
@@ -65,46 +66,42 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
         }
         if (likeId) {
             // Logic to delete like
-            if (likeId) {
-                const deleteUrl = `${apiUrl}/likes/${likeId}`;
-                const deleteLike = async () => {
-                    try {
-                        const response = await fetch(deleteUrl, {
-                            method: "DELETE",
-                            mode: "cors",
-                            headers: {
-                                Authorization: `Bearer ${getJWT()}`,
-                            },
-                        });
-                        if (response.ok) {
-                            getLikes();
-                        } else {
-                            const errorData = await response.json();
-                            if (errorData && errorData.message) {
-                                console.log(errorData.message);
-                            }
+            const deleteUrl: string = `${apiUrl}/likes/${likeId}`;
+            const deleteLike = async () => {
+                try {
+                    const response: Response = await fetch(deleteUrl, {
+                        method: "DELETE",
+                        mode: "cors",
+                        headers: {
+                            Authorization: `Bearer ${getJWT()}`,
+                        },
+                    });
+                    if (response.ok) {
+                        getLikes();
+                    } else {
+                        const errorData = await response.json();
+                        if (errorData && errorData.message) {
+                            console.log(errorData.message);
                         }
-                    } catch (err) {
-                        console.error(`Error: ${err}`);
                     }
-                };
-                deleteLike();
-            } else {
-                console.log("Error in obtaining like Id");
-            }
+                } catch (err) {
+                    console.error(`Error: ${err}`);
+                }
+            };
+            deleteLike();
         } else {
             // Logic to create like
-            const createUrl = `${apiUrl}/likes`;
+            const createUrl: string = `${apiUrl}/likes`;
             const createLike = async () => {
                 try {
-                    const response = await fetch(createUrl, {
+                    const response: Response = await fetch(createUrl, {
                         method: "POST",
                         mode: "cors",
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${getJWT()}`,
                         },
-                        body: JSON.stringify({ like: { main_thread_id: props.main_thread_id } }),
+                        body: JSON.stringify({ like: { main_thread_id: main_thread_id } }),
                     });
                     if (response.ok) {
                         getLikes();
@@ -126,18 +123,20 @@ const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
     }, []);
 
     return (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Checkbox
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite sx={{ color: "red" }} />}
-                checked={likeId ? true : false}
-                onChange={handleLikeChange}
-            />
-            <Typography variant="body2" component="div" color="textSecondary">
-                {`Total number of likes: ${likes.length}`}
-            </Typography>
-            <LoginAlert loginAlert={loginAlert} closeLoginAlert={closeLoginAlert} />
-        </Box>
+        <>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Checkbox
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite sx={{ color: "red" }} />}
+                    checked={likeId ? true : false}
+                    onChange={handleLikeChange}
+                />
+                <Typography variant="body2" component="div" color="textSecondary">
+                    {`Total number of likes: ${likes.length}`}
+                </Typography>
+                <LoginAlert loginAlert={loginAlert} closeLoginAlert={closeLoginAlert} />
+            </Box>
+        </>
     );
 };
 

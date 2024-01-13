@@ -2,6 +2,6 @@ import Comment from "./Comment";
 
 type CommentItemProps = {
     comment: Comment;
-    reRender: () => void;
+    callback: () => void;
 };
 export default CommentItemProps;
