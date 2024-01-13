@@ -1,8 +1,8 @@
 # CVWO Assignment Frontend
 
-Frontend submission by Ng Zi Xin. It is not completed, there is still a lot of code clean up I need to make, but the features by and large are there and functioning. Do let me know of any improvements I can make, thank you.
+Frontend submission by Ng Zi Xin. 
 
-Please ensure that you have set-up and are able to run the [backend](https://github.com/NgZiXin/CVWO-Backend) first.
+If you are connecting to backend development server, please ensure that you have set-up and are able to run the [backend](https://github.com/NgZiXin/CVWO-Backend) first.
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ Please ensure that you have set-up and are able to run the [backend](https://git
 yarn install
 ```
 
-5. Edit **src/data/apiUrl.tsx** to input backend API url as baseUrl.
+5. Edit **src/data/apiUrl.tsx** to input backend API url as baseUrl. By default, you will be connected to the production backend server. 
     ![Api Url](public/images/ApiUrl.png)
 
 
