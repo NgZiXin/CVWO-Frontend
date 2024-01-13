@@ -61,28 +61,34 @@ const CommentItem: React.FC<CommentItemProp> = (props) => {
                             closeUpdate={closeUpdate}
                             maxRows={numRows}
                         />
-                        {showButtons && !update && (
-                            <Grid
-                                container
-                                sx={{ alignItems: "center" }}
-                                direction="row"
-                                justifyContent="space-between"
-                            >
-                                <Grid item>
-                                    {comment.body.length > numRows * 73 ? (
-                                        <Button onClick={handleShowMore}>{"Show More"}</Button>
-                                    ) : (
-                                        <></>
+                        {!update && (
+                            <>
+                                <Grid
+                                    container
+                                    sx={{ alignItems: "center" }}
+                                    direction="row"
+                                    justifyContent="space-between"
+                                >
+                                    <Grid item>
+                                        {comment.body.length > numRows * 73 ? (
+                                            <Button onClick={handleShowMore}>{"Show More"}</Button>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        {numRows > 3 ? <Button onClick={handleShowLess}>{"Show Less"}</Button> : <></>}
+                                    </Grid>
+                                    {showButtons && (
+                                        <>
+                                            <Grid item>
+                                                <Button onClick={openUpdate} sx={{ color: "#A8ADBD" }}>
+                                                    {"Edit"}
+                                                </Button>
+                                                <CommentDelete comment_id={comment.id} callback={callback} />
+                                            </Grid>
+                                        </>
                                     )}
-                                    {numRows > 3 ? <Button onClick={handleShowLess}>{"Show Less"}</Button> : <></>}
                                 </Grid>
-                                <Grid item>
-                                    <Button onClick={openUpdate} sx={{ color: "#A8ADBD" }}>
-                                        {"Edit"}
-                                    </Button>
-                                    <CommentDelete comment_id={comment.id} callback={callback} />
-                                </Grid>
-                            </Grid>
+                            </>
                         )}
                     </CardContent>
                 </Card>
