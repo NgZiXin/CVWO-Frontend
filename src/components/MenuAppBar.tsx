@@ -38,7 +38,7 @@ const MenuAppBar: React.FC = () => {
                                     typewriter
                                         .changeDelay(80)
                                         .pauseFor(1000)
-                                        .typeString("Welcome to NUS Exchange Net!")
+                                        .typeString("Welcome to NUS Exchange!")
                                         .start();
                                 }}
                             />
