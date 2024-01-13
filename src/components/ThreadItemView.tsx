@@ -21,7 +21,10 @@ const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
                     }}
                 >
                     <CardContent>
-                        <Typography variant="h5" sx={{ wordBreak: "break-word", textAlign: "justify" }}>
+                        <Typography
+                            variant="h5"
+                            sx={{ wordBreak: "break-word", overflowWrap: "break-word", textAlign: "justify" }}
+                        >
                             {thread.title}
                         </Typography>
                         <Grid
