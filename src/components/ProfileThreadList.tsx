@@ -25,7 +25,14 @@ const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
             });
             if (response.ok) {
                 const response_items = await response.json();
-                setHistory(response_items.history.reverse());
+                const unsortedHistory: History[] = response_items.history;
+                setHistory(
+                    unsortedHistory.sort((itemA, itemB) => {
+                        const dateA = new Date(itemA.created_at);
+                        const dateB = new Date(itemB.created_at);
+                        return dateB.valueOf() - dateA.valueOf();
+                    }),
+                );
             } else {
                 const errorData = await response.json();
                 if (errorData && errorData.message) {
