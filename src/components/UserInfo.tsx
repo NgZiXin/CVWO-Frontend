@@ -16,6 +16,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { ReactCountryFlag } from "react-country-flag";
 
 const UserInfo: React.FC<UserInfoProps> = (props) => {
+    /* This component handles the display of one's profile information when the user click on
+    the particular username. */
+
     const { user } = props;
 
     // Logic for opening dialog

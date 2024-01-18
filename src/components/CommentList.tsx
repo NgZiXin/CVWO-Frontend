@@ -7,6 +7,8 @@ import { Typography, Grid, Box } from "@mui/material";
 import React from "react";
 
 const CommentList: React.FC<CommentListProp> = (props) => {
+    /* This component formats all the comments of a particular thread nicely in a list. */
+
     const { main_thread_id } = props;
     const commentsUrl: string = `${apiUrl}/main_threads/${main_thread_id}/comments`;
 

@@ -14,6 +14,9 @@ const defaultFields: LoginFormFields = {
 };
 
 const Login: React.FC<LoginProps> = (props) => {
+    /* This component handles the login of users. The user's info and JWT are stored in the
+    browser's cookies. The callback function here re-renders the MenuAppBar component.*/
+
     const { callback } = props;
     const setAlertMessage: (message: string | null) => void = useOutletContext();
 

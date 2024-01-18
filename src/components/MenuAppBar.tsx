@@ -8,6 +8,10 @@ import Typewriter from "typewriter-effect";
 import React from "react";
 
 const MenuAppBar: React.FC = () => {
+    /* This component renders an appbar at the homepage. User who are not logged in will see a log in
+    button while users who are logged in will see an user icon which they can use to access their 
+    profile or to logout.*/
+
     // Logic for Authentication
     const [userId, setUserId] = React.useState<number | null>(getUserId());
     const checkForUserId = () => setUserId(getUserId());

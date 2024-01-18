@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Link, Typography, Modal, Button, Grid } from "@mui/material";
 
 const Guidelines: React.FC = () => {
+    /* This component handles the display of forum's guidelines using a modal. */
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

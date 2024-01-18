@@ -85,7 +85,7 @@ const Signup: React.FC = () => {
         <>
             <Container sx={{ textAlign: "left" }}>
                 <form onSubmit={handleSubmit} autoComplete="off">
-                    <Typography variant="h5"> Signup Form</Typography>
+                    <Typography variant="h5">{"Signup Form"}</Typography>
                     <TextField
                         id="username"
                         required

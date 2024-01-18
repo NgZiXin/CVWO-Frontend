@@ -10,6 +10,12 @@ import LanguageIcon from "@mui/icons-material/Language";
 import React from "react";
 
 const CommentItem: React.FC<CommentItemProp> = (props) => {
+    /* This component renders a comment card for display. Only the user who wrote the comment 
+    will be able to see the edit and delete button. If the comment text is too long to fit into 
+    the card, users will be able to select "show more" or "show less" to view more or less of the 
+    comment. The callback funtion here is triggered only when there is an update made to the comment
+    and its purpose is to re-render the CommentList so as to reflect the new changes for the user.*/
+
     const { comment, callback } = props;
 
     // Logic for Text Area display

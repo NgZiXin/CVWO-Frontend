@@ -7,6 +7,8 @@ import { Typography, Grid, Link } from "@mui/material";
 import React from "react";
 
 const ThreadList: React.FC<ThreadListProps> = (props) => {
+    /* This component formats all the threads of a particular category nicely in a list. */
+
     const { categoryId } = props;
     const threadListUrl: string = `${apiUrl}/categories/${categoryId}`;
 

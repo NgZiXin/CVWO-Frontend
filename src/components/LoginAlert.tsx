@@ -3,6 +3,9 @@ import React from "react";
 import { Alert, Snackbar } from "@mui/material";
 
 const LoginAlert: React.FC<LoginAlertProps> = (props) => {
+    /* This component renders an alert to notify users to login (before they can proceed with 
+    the particular action). */
+
     const { loginAlert, closeLoginAlert } = props;
 
     return (

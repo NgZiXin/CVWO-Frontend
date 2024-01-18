@@ -18,6 +18,10 @@ const defaultFields: ThreadFormFields = {
 };
 
 const ThreadCreate: React.FC<ThreadCreateProps> = (props) => {
+    /* This component allows users to create threads. The callback function triggered after the form 
+    submission ensures that the ThreadList component is re-rendered so as to reflect the newly created 
+    thread for the user. */
+
     const { callback } = props;
     const setAlertMessage: (message: string | null) => void = useOutletContext();
 

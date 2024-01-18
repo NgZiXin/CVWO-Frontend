@@ -10,6 +10,8 @@ import Favorite from "@mui/icons-material/Favorite";
 import React from "react";
 
 const ThreadLike: React.FC<ThreadLikeProp> = (props) => {
+    /* This component handles the thread's like functionality. */
+
     const { main_thread_id } = props;
     const userId: number | null = getUserId();
 

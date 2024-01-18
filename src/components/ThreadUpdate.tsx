@@ -8,6 +8,9 @@ import { useOutletContext } from "react-router-dom";
 import React from "react";
 
 const ThreadUpdate: React.FC<ThreadUpdateProps> = (props) => {
+    /* This component handles the updating of a thread. The callback function here re-renders the 
+    ThreadItemView component to reflect the new changes for the user. */
+
     const { thread, callback } = props;
     const patchUrl: string = `${apiUrl}/main_threads/${thread.id}`;
     const defaultFields: ThreadFormFields = {

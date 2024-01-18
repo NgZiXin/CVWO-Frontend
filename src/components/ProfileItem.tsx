@@ -10,6 +10,8 @@ import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ProfileItem: React.FC<ProfileItemProps> = (props) => {
+    /* This component handles the display and updating of user's profile in the profile page */
+
     const { user, callback } = props;
     const patchUrl: string = `${apiUrl}/users/${user.id}`;
     const setAlertMessage: (message: string | null) => void = useOutletContext();

@@ -3,15 +3,15 @@ import { MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentTe
 import { useOutletContext } from "react-router-dom";
 import React from "react";
 
-const clearAllCookies = () => {
-    const cookies: string[] = document.cookie.split("; ");
-    for (const cookie of cookies) {
-        const [name] = cookie.split("=");
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-    }
+const clearAuthCookies = () => {
+    document.cookie = `user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    document.cookie = `JWT=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
 };
 
 const Logout: React.FC<LogoutProps> = (props) => {
+    /* This component handles the logging out of users by clearing their cookies 
+    storing their user info and JWT. The callback function here re-renders the MenuAppBar component.*/
+
     const { callback } = props;
     const setAlertMessage: (message: string | null) => void = useOutletContext();
 
@@ -21,7 +21,7 @@ const Logout: React.FC<LogoutProps> = (props) => {
         setDialogOpen(true);
     };
     const handleConfirmDelete = () => {
-        clearAllCookies();
+        clearAuthCookies();
         callback();
         setDialogOpen(false);
         setAlertMessage("Successfully Logged out!");

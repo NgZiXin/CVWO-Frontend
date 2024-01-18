@@ -6,6 +6,10 @@ import { useOutletContext } from "react-router-dom";
 import React from "react";
 
 const CommentDelete: React.FC<CommentDeleteProps> = (props) => {
+    /* This component allows users to delete their comments. They will also be prompted with a 
+    confirmation dialog as the action is irreversible. The callback function ensures that the 
+    CommentList component is re-rendered so as to reflect the new changes for the user.*/
+
     const { comment_id, callback } = props;
     const deleteUrl: string = `${apiUrl}/comments/${comment_id}`;
     const setAlertMessage: (message: string | null) => void = useOutletContext();

@@ -8,6 +8,8 @@ import { ReactCountryFlag } from "react-country-flag";
 import React from "react";
 
 const ThreadItemView: React.FC<ThreadItemViewProps> = (props) => {
+    /* This component renders a thread card for display in the ThreadView page. */
+
     const { thread } = props;
 
     return (

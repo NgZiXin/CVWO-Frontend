@@ -6,6 +6,9 @@ import { useOutletContext, useNavigate } from "react-router-dom";
 import React from "react";
 
 const ThreadDelete: React.FC<ThreadDeleteProp> = (props) => {
+    /* This component allows users to delete their threads. They will also be prompted with a 
+    confirmation dialog as the action is irreversible. */
+
     const { main_thread_id } = props;
     const deleteUrl: string = `${apiUrl}/main_threads/${main_thread_id}`;
     const navigate = useNavigate();

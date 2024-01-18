@@ -9,6 +9,10 @@ import SendIcon from "@mui/icons-material/Send";
 import React from "react";
 
 const CommentCreate: React.FC<CommentCreateProps> = (props) => {
+    /* This component allows users to create comments. The callback function triggered after the form 
+    submission ensures that the CommentList component is re-rendered so as to reflect the newly created 
+    comment for the user. */
+
     const { main_thread_id, callback } = props;
     const createUrl: string = `${apiUrl}/comments`;
     const user_id: number | null = getUserId();

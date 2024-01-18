@@ -2,6 +2,8 @@
 
 Frontend submission by Ng Zi Xin. 
 
+Access the deployed web application here: [https://cvwo-frontend.vercel.app/](https://cvwo-frontend.vercel.app/)
+
 If you are connecting to backend development server, please ensure that you have set-up and are able to run the [backend](https://github.com/NgZiXin/CVWO-Backend) first.
 
 ## Getting Started

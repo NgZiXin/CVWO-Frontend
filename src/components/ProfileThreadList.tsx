@@ -10,6 +10,8 @@ import React from "react";
 const historyUrl: string = `${apiUrl}/me/history`;
 
 const ProfileThreadList: React.FC<ProfileThreadListProps> = (props) => {
+    /* This component handles the display of the list of user's history of actions. */
+
     const { historyFilter } = props;
 
     //Logic to query for user's history

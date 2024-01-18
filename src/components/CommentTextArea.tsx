@@ -27,6 +27,9 @@ const commentUpdate: React.CSSProperties = {
 };
 
 const CommentTextArea: React.FC<CommentTextAreaProps> = (props) => {
+    /* This component handles the display of text within the comment card itself.
+    Users editing their comments will interact directly with this textarea. */
+
     const { id, body, maxRows, update, closeUpdate } = props;
     const patchUrl: string = `${apiUrl}/comments/${id}`;
     const setAlertMessage: (message: string | null) => void = useOutletContext();
